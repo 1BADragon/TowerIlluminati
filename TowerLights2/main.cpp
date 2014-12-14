@@ -1,3 +1,6 @@
+/*
+ * Tower Animator Project
+ */
 #include "mainwindow.h"
 #include "colorwheel.h"
 #include "color.h"
