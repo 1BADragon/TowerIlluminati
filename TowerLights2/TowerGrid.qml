@@ -1,7 +1,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 
-Rectangle {
+Rectangle{
     width: 415
     height: 995
     Grid {
@@ -22,9 +22,11 @@ Rectangle {
                     hoverEnabled: true
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    onPressed: {
-                        parent.color = currentColor.colorToString()
-                    }
+                    onClicked:
+                        if (mouse.button == Qt.LeftButton)
+                            parent.color = currentColor.colorToString();
+                        else if (mouse.button == Qt.RightButton)
+                            parent.color = "grey";
                 }
             }
         }
