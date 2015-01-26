@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     cWheel->size();
     ui->colorWheelWidget->show();
     ui->TowerGrid->rootContext()->setContextProperty("currentColor", cWheel);
-
 }
 
 MainWindow::~MainWindow()
