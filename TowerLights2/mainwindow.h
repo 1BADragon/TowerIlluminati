@@ -2,6 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "ui_mainwindow.h"
+#include "colorwheel.h"
+#include <cstdlib>
+#include <iostream>
+#include <QtDeclarative/QDeclarativeView>
+#include <QQmlContext>
+#include <QString>
 
 namespace Ui {
 class MainWindow;
@@ -18,8 +25,24 @@ public:
 private slots:
     void on_actionExit_triggered();
 
+    void on_redSpinBox_valueChanged(int arg1);
+
+    void on_blueSpinBox_valueChanged(int arg1);
+
+    void on_greenSpinBox_valueChanged(int arg1);
+
+    void updateColorSpinBoxes(QColor);
+
 private:
     Ui::MainWindow *ui;
+    ColorWheel *cWheel;
+    QSpinBox *red;
+    QSpinBox *blue;
+    QSpinBox *green;
+    bool ping;
+
+
+
 };
 
 #endif // MAINWINDOW_H

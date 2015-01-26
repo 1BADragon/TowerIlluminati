@@ -217,7 +217,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox">
+   <widget class="QSpinBox" name="redSpinBox">
     <property name="geometry">
      <rect>
       <x>790</x>
@@ -233,7 +233,7 @@
      <number>32</number>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_2">
+   <widget class="QSpinBox" name="greenSpinBox">
     <property name="geometry">
      <rect>
       <x>790</x>
@@ -249,7 +249,7 @@
      <number>32</number>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_3">
+   <widget class="QSpinBox" name="blueSpinBox">
     <property name="geometry">
      <rect>
       <x>790</x>

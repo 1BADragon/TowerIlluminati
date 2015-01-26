@@ -23,10 +23,12 @@ Rectangle{
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
                     onClicked:
+                    {
                         if (mouse.button == Qt.LeftButton)
                             parent.color = currentColor.colorToString();
                         else if (mouse.button == Qt.RightButton)
                             parent.color = "grey";
+                    }
                 }
             }
         }
