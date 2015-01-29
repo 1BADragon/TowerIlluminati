@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include "ui_mainwindow.h"
 #include "colorwheel.h"
+#include "colorpaletteassigner.h"
 #include <cstdlib>
 #include <iostream>
 #include <QtDeclarative/QDeclarativeView>
 #include <QQmlContext>
 #include <QString>
+#include <QPalette>
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +43,7 @@ private:
     QSpinBox *green;
     bool ping;
 
-
+    void fixPalletBackground();
 
 };
 

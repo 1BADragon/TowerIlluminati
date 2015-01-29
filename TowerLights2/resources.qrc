@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>colorPallet.qml</file>
+        <file>TowerGrid.qml</file>
+        <file>windowScroll.qml</file>
+    </qresource>
+</RCC>

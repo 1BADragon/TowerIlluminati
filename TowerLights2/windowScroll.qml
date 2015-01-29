@@ -1,11 +1,15 @@
 import QtQuick 2.0
 
 Rectangle {
-    width: 725
+    width: 724
     height: 200
     color: "#00000000"
+    border.width: .5
+    border.color: "grey"
 
     Grid {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         columns: 7
         rows: 1
         spacing: 30
@@ -31,6 +35,8 @@ Rectangle {
         id: rectangle1
         x: 313
         y: -1
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         width: 79
         height: 200
         color: "#00000000"

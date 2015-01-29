@@ -22,6 +22,7 @@ class ColorWheel : public QWidget
 
     virtual QSize sizeHint () const;
     virtual QSize minimumSizeHint () const;
+
     QColor color();
     Q_INVOKABLE QString colorToString();
     
@@ -30,6 +31,7 @@ class ColorWheel : public QWidget
     
     public slots:
         void setColor(const QColor &color);
+        void updateColor(const QColor &color);
 
  protected:
         void mousePressEvent(QMouseEvent *event);
@@ -57,7 +59,8 @@ class ColorWheel : public QWidget
         void drawPicker(const QColor &color);
         void drawSquareImage(const int &hue);
         void composeWheel();
-        private slots:
+
+private slots:
             void hueChanged(const int &hue);
             void svChanged(const QColor &newcolor);
 };

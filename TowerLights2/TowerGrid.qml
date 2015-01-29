@@ -4,6 +4,7 @@ import QtQuick.Controls 1.2
 Rectangle{
     width: 415
     height: 995
+    color: "#00000000"
     Grid {
         id: towerGrid
         rows: 20
@@ -19,6 +20,7 @@ Rectangle{
                 border.width: 1
                 border.color: "black"
                 MouseArea {
+                    preventStealing: false
                     hoverEnabled: true
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent

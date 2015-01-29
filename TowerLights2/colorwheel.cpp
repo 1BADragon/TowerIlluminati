@@ -39,7 +39,20 @@ void ColorWheel::setColor(const QColor &color) {
     update();
     emit colorChange(color);
 }
+void ColorWheel::updateColor(const QColor &color) {
+    if(color == current) return;
+    if(color.hue() != current.hue()){
+        hueChanged(color.hue());
+    }
 
+    if( color.saturation() != current.saturation()
+        || color.value() != current.value() ){
+        svChanged(color);
+    }
+
+    update();
+    //emit colorChange(color);
+}
 
 QColor ColorWheel::posColor(const QPoint &point) {
     if( ! wheel.rect().contains(point) ) return QColor();

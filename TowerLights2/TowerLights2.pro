@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     frame.cpp \
     movie.cpp \
     colorwheel.cpp \
-    color.cpp
+    color.cpp \
+    colorpaletteassigner.cpp
 
 HEADERS  += mainwindow.h \
     animation.h \
@@ -36,10 +37,17 @@ HEADERS  += mainwindow.h \
     frame.h \
     movie.h \
     colorwheel.h \
-    color.h
+    color.h \
+    colorpaletteassigner.h
 
 FORMS    += mainwindow.ui
 
 OTHER_FILES += \
-    TowerGrid.qml \
-    windowScrol.qml
+    TowerGrid.qml
+
+DISTFILES += \
+    colorPallet.qml \
+    windowScroll.qml
+
+RESOURCES += \
+    resources.qrc
