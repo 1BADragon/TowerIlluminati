@@ -10,6 +10,7 @@ QT       += widgets
 QT       += quickwidgets
 QT       += qml
 QT       += declarative
+QT       += quick
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,7 +28,7 @@ SOURCES += main.cpp\
     movie.cpp \
     colorwheel.cpp \
     color.cpp \
-    colorpaletteassigner.cpp
+    colorpalette.cpp
 
 HEADERS  += mainwindow.h \
     animation.h \
@@ -38,16 +39,17 @@ HEADERS  += mainwindow.h \
     movie.h \
     colorwheel.h \
     color.h \
-    colorpaletteassigner.h
+    colorpalette.h
 
 FORMS    += mainwindow.ui
 
-OTHER_FILES += \
-    TowerGrid.qml
+OTHER_FILES +=
 
 DISTFILES += \
     colorPallet.qml \
-    windowScroll.qml
+    windowScroll.qml \
+    currentColor.qml \
+    towerGrid.qml
 
 RESOURCES += \
     resources.qrc

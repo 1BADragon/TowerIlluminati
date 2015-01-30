@@ -2,9 +2,15 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 Rectangle{
+    id: gridArea
     width: 415
     height: 995
     color: "#00000000"
+    signal bang()
+    MouseArea{
+        anchors.fill: parent
+        onPositionChanged: bang()
+    }
     Grid {
         id: towerGrid
         rows: 20
@@ -19,17 +25,23 @@ Rectangle{
                 color: "grey"
                 border.width: 1
                 border.color: "black"
+
                 MouseArea {
                     preventStealing: false
                     hoverEnabled: true
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
+                    Connections:
+                    {
+                        target:gridArea
+
+                    }
                     onClicked:
                     {
-                        if (mouse.button == Qt.LeftButton)
-                            parent.color = currentColor.colorToString();
-                        else if (mouse.button == Qt.RightButton)
+                        if (mouse.button == Qt.RightButton)
                             parent.color = "grey";
+                        else if (mouse.button == Qt.LeftButton)
+                            parent.color = currentColor.colorToString();
                     }
                 }
             }

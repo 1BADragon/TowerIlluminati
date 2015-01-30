@@ -41,6 +41,6 @@ Rectangle {
         height: 200
         color: "#00000000"
         border.color: "black"
-        border.width: 5
+        border.width: 3
     }
 }

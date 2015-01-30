@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Tower Animator</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QQuickWidget" name="TowerGridWidget">
@@ -427,6 +427,19 @@
      <url>
       <string/>
      </url>
+    </property>
+   </widget>
+   <widget class="QQuickWidget" name="currentColorWidget">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>510</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="resizeMode">
+     <enum>QQuickWidget::SizeRootObjectToView</enum>
     </property>
    </widget>
   </widget>

@@ -4,13 +4,14 @@
 #include <QMainWindow>
 #include "ui_mainwindow.h"
 #include "colorwheel.h"
-#include "colorpaletteassigner.h"
+#include "colorpalette.h"
 #include <cstdlib>
 #include <iostream>
 #include <QtDeclarative/QDeclarativeView>
 #include <QQmlContext>
 #include <QString>
 #include <QPalette>
+#include <QQuickItem>
 
 namespace Ui {
 class MainWindow;
@@ -34,6 +35,8 @@ private slots:
     void on_greenSpinBox_valueChanged(int arg1);
 
     void updateColorSpinBoxes(QColor);
+
+    void towerPainting();
 
 private:
     Ui::MainWindow *ui;

@@ -8,16 +8,29 @@ Rectangle {
     Grid{
         id: colorPallet
         rows: 2
-        columns: 10
+        columns: 8
         spacing: 5
         Repeater{
-            model: 20
+            model: 16
             Rectangle{
                 width: 25
                 height: 25
-                //color: defaultColor.getColor()
+                color: paletteColors.getColor()
                 border.width: 1
                 border.color: "black"
+                MouseArea
+                {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.RightButton | Qt.LeftButton
+                    onClicked: {
+                        if(mouse.button == Qt.RightButton){
+                            parent.color = currentColor.colorToString();
+                        }else if(mouse.button == Qt.LeftButton){
+                            currentColor.setColor(parent.color)
+                        }
+                    }
+
+                }
             }
         }
     }
