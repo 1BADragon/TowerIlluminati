@@ -12,17 +12,19 @@ MainWindow::MainWindow(QWidget *parent) :
   cWheel->show();
   cWheel->size();
 
-  ui->Previewer->setSource(QUrl("qrc:/windowScroll.qml"));
-  ui->TowerGridWidget->setSource(QUrl("qrc:/towerGrid.qml"));
-  ui->colorPalletWidget->setSource(QUrl("qrc:/colorPallet.qml"));
-  ui->currentColorWidget->setSource(QUrl("qrc:/currentColor.qml"));
-
   //Add these object as context properties in the qml documents
   ui->TowerGridWidget->rootContext()->setContextProperty("currentColor", cWheel);
   ui->colorPalletWidget->rootContext()->setContextProperty("currentColor", cWheel);
 
   colorPalette *CPA = new colorPalette();
   ui->colorPalletWidget->rootContext()->setContextProperty("paletteColors", CPA);
+
+  ui->Previewer->setSource(QUrl("qrc:/windowScroll.qml"));
+  ui->TowerGridWidget->setSource(QUrl("qrc:/towerGrid.qml"));
+  ui->colorPalletWidget->setSource(QUrl("qrc:/colorPallet.qml"));
+  ui->currentColorWidget->setSource(QUrl("qrc:/currentColor.qml"));
+
+
 
   //create initial values for the color selectors
   red = ui->redSpinBox;

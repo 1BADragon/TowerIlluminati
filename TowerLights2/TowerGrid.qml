@@ -31,11 +31,6 @@ Rectangle{
                     hoverEnabled: true
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    Connections:
-                    {
-                        target:gridArea
-
-                    }
                     onClicked:
                     {
                         if (mouse.button == Qt.RightButton)
