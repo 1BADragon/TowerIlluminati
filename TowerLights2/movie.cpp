@@ -2,6 +2,6 @@
 
 Movie::Movie()
 {
-  frameSquence = new QMap <qint64,Frame>;
+  frameSquence = new QList <Frame>;
   audio = new QMediaPlayer;
 }

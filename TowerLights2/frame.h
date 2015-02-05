@@ -11,7 +11,7 @@ public:
 
 private:
     Pixel ** fullGrid;
-    Pixel ** grid;
+    Pixel ** towergrid;
     qint64 timeStamp;
 };
 

@@ -1,7 +1,7 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 
-#include <QMap>
+#include <QList>
 #include <QMediaPlayer>
 
 #include "frame.h"
@@ -12,7 +12,7 @@ public:
   Movie();
 
 private:
-  QMap <qint64, Frame> *frameSquence;
+  QList <Frame> *frameSquence;
   QMediaPlayer *audio;
 };
 
