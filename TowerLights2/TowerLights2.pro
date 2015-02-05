@@ -20,7 +20,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    animation.cpp \
     grid.cpp \
     pixel.cpp \
     pixelgroup.cpp \
@@ -31,7 +30,6 @@ SOURCES += main.cpp\
     colorpalette.cpp
 
 HEADERS  += mainwindow.h \
-    animation.h \
     grid.h \
     pixel.h \
     pixelgroup.h \
