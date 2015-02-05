@@ -7,8 +7,7 @@
 class Pixel
 {
 public:
-    Pixel();
-    Pixel(int x, int y, int r, int g, int b);
+    Pixel(int x, int y);
     Pixel(QPoint p, QColor c);
     void setPoint(int x, int y);
     void setPoint(QPoint p);

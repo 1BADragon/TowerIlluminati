@@ -1,14 +1,8 @@
 #include "pixel.h"
 
-Pixel::Pixel()
+Pixel::Pixel(int x, int y)
 {
-    color.setRgb(0,0,0);
-    point.setX(0);
-    point.setY(0);
-}
-
-Pixel::Pixel(int x, int y, int r, int g, int b){
-    color.setRgb(r,g,b);
+    color.setNamedColor("grey");
     point.setX(x);
     point.setY(y);
 }
