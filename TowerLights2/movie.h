@@ -10,10 +10,12 @@ class Movie
 {
 public:
   Movie();
+  QUrl *mainFile;
+  QUrl audioFile;
 
 private:
   QList <Frame> *frameSquence;
-  QMediaPlayer *audio;
+  //QMediaPlayer *audio;
 };
 
 #endif // MOVIE_H

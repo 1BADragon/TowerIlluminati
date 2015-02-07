@@ -5,6 +5,7 @@
 #include "ui_mainwindow.h"
 #include "colorwheel.h"
 #include "colorpalette.h"
+#include "movie.h"
 #include <cstdlib>
 #include <iostream>
 #include <QtDeclarative/QDeclarativeView>
@@ -12,6 +13,7 @@
 #include <QString>
 #include <QPalette>
 #include <QQuickItem>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +40,8 @@ private slots:
 
     void towerPainting();
 
+    void on_actionOpen_Audio_File_triggered();
+
 private:
     Ui::MainWindow *ui;
     ColorWheel *cWheel;
@@ -45,6 +49,9 @@ private:
     QSpinBox *blue;
     QSpinBox *green;
     bool ping;
+
+    Movie *currentMovie;
+    QMediaPlayer *audioPlayer;
 
     void fixPalletBackground();
 

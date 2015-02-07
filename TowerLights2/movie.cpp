@@ -3,5 +3,6 @@
 Movie::Movie()
 {
   frameSquence = new QList <Frame>;
-  audio = new QMediaPlayer;
+  //audioFile = new QUrl;
+  //audio = new QMediaPlayer;
 }
