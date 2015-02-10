@@ -16,8 +16,10 @@ public:
     Frame( const Frame& original);
     void setTimeStamp(qint64 time);
     qint64 getTimeStamp();
-    void setPixel(int x, int y, QColor c);
-    Pixel *getPixel(int x, int y);
+    void setFullGridPixel(int x, int y, QColor c);
+    void setTowerGridPixel(int x, int y, QColor c);
+    Pixel *FullGridPixel(int x, int y);
+    Pixel *TowerGridPixel(int x, int y);
 
 private:
     Pixel* fullGrid[12][20];

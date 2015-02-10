@@ -4,7 +4,7 @@ Frame::Frame()
 {
     for(int i = 0; i < FULLGRIDWIDTH; i++){
         for(int j = 0; j < FULLGRIDHEIGHT; j++){
-            fullGrid[i][j] = new Pixel(i, j);
+            fullGrid[i][j] = new Pixel();
         }
     }
     for(int i = 0; i < TOWERWIDTH; i++){
@@ -19,7 +19,7 @@ Frame::Frame(const Frame &original)
 {
     for(int i = 0; i < FULLGRIDWIDTH; i++){
         for(int j = 0; j < FULLGRIDHEIGHT; j++){
-            fullGrid[i][j] = new Pixel(original.fullGrid[i][j]->getPoint(), original.fullGrid[i][j]->getColor());
+            fullGrid[i][j] = new Pixel(original.fullGrid[i][j]->getColor());
         }
     }
     for(int i = 0; i < TOWERWIDTH; i++){
@@ -38,7 +38,20 @@ qint64 Frame::getTimeStamp(){
     return timeStamp;
 }
 
-void Frame::setPixel(int x, int y, QColor c){
+void Frame::setFullGridPixel(int x, int y, QColor c){
     fullGrid[x][y]->setColor(c);
-    fullGrid[x][y]->setPoint(x, y);
+}
+
+void Frame::setTowerGridPixel(int x, int y, QColor c)
+{
+    towerGrid[x][y]->setColor(c);
+}
+
+Pixel *Frame::TowerGridPixel(int x, int y)
+{
+    return towerGrid[x][y];
+}
+
+Pixel *Frame::FullGridPixel(int x, int y){
+    return fullGrid[x][y];
 }

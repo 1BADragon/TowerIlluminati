@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
 
   //Setup media.
-  audioPlayer = new QMediaPlayer;
+  currentMovie = new Movie();
 
   //Attach Widgets to the UI
   cWheel = new ColorWheel(ui->colorWheelWidget);
@@ -140,9 +140,9 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
     //openAudioDialog.setVisible(true);
     //if (openAudioDialog.exec())
     //    openAudioDialog.urlSelected(currentMovie->audioFile);
-    currentMovie->audioFile = QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
-        tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)")));
-    std::cout << "File is" << currentMovie->audioFile.toString().toStdString() << std::endl;
+    currentMovie->setAudio(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
+        tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)"))));
+    std::cout << "File is" << currentMovie->getAudioFile().toString().toStdString() << std::endl;
     //std::cerr << currentMovie->audioFile.toString().toStdString();
     //audioPlayer->setMedia(currentMovie->audioFile);
     //std::cout << audioPlayer->duration();

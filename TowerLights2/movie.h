@@ -10,11 +10,14 @@ class Movie
 {
 public:
   Movie();
-  QUrl *mainFile;
-  QUrl audioFile;
+  void setAudio(QUrl url);\
+  QUrl getAudioFile();
 
 private:
+  QUrl mainFile;
+  QUrl audioFile;
   QList <Frame> *frameSquence;
+
   //QMediaPlayer *audio;
 };
 

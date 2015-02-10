@@ -7,19 +7,13 @@
 class Pixel
 {
 public:
-    Pixel(int x, int y);
-    Pixel(QPoint p, QColor c);
-    void setPoint(int x, int y);
-    void setPoint(QPoint p);
+    Pixel();
+    Pixel(QColor c);
     void setColor(int r, int g, int b);
     void setColor(QColor c);
-    void applyVector(int x, int y);
-    void applyVector(QPoint p);
-    QPoint getPoint();
     QColor getColor();
     void operator = (const Pixel& other);
 private:
-    QPoint point;
     QColor color;
 };
 

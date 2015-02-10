@@ -51,7 +51,6 @@ private:
     bool ping;
 
     Movie *currentMovie;
-    QMediaPlayer *audioPlayer;
 
     void fixPalletBackground();
 

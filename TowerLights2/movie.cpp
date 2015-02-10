@@ -3,6 +3,15 @@
 Movie::Movie()
 {
   frameSquence = new QList <Frame>;
-  //audioFile = new QUrl;
-  //audio = new QMediaPlayer;
+
+}
+
+void Movie::setAudio(QUrl url)
+{
+  audioFile = url;
+}
+
+QUrl Movie::getAudioFile()
+{
+  return audioFile;
 }
