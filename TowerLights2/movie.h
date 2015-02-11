@@ -28,7 +28,7 @@ public:
 private:
   QUrl mainFile;
   QUrl audioFile;
-  QList <Frame*> *frameSquence;
+  QList <Frame*> *frameSequence;
   QMediaPlayer *audio;
 
   int currentFrameNumber;

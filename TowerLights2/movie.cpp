@@ -2,7 +2,7 @@
 
 Movie::Movie()
 {
-  frameSquence = new QList <Frame*>;
+  frameSequence = new QList <Frame*>;
   audio = new QMediaPlayer;
   currentIndex = 0;
   currentFrameNumber = 0;
@@ -21,30 +21,30 @@ QUrl Movie::getAudioFile()
 
 int Movie::getFrameCount()
 {
-  return frameSquence->length();
+  return frameSequence->length();
 }
 
 void Movie::newFrame(){
-  frameSquence->append(new Frame());
+  frameSequence->append(new Frame());
 }
 
 void Movie::newFrame(int index){
-  frameSquence->insert(index, new Frame());
+  frameSequence->insert(index, new Frame());
 }
 
 void Movie::insertFrame(int index, Frame *f)
 {
-  frameSquence->insert(index, f);
+  frameSequence->insert(index, f);
 }
 
 void Movie::setFrameTime(int index, qint64 time)
 {
-  frameSquence->at(index)->setTimeStamp(time);
+  frameSequence->at(index)->setTimeStamp(time);
 }
 
 Frame* Movie::next()
 {
-  return frameSquence->at(currentIndex++);
+  return frameSequence->at(currentIndex++);
 }
 
 void Movie::reset()
@@ -54,7 +54,7 @@ void Movie::reset()
 
 void Movie::setFrame(int index, Frame *f)
 {
-  (*frameSquence)[index] = f;
+  (*frameSequence)[index] = f;
 }
 
 void Movie::setFile(QUrl url)
