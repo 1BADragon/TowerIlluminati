@@ -183,7 +183,7 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
     //    openAudioDialog.urlSelected(currentMovie->audioFile);
     currentMovie->setAudio(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
         tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)"))));
-    std::cout << "File is" << currentMovie->getAudioFile().toString().toStdString() << std::endl;
+    //std::cout << "File is" << currentMovie->getAudioFile().toString().toStdString() << std::endl;
     //std::cerr << currentMovie->audioFile.toString().toStdString();
     //audioPlayer->setMedia(currentMovie->audioFile);
     //std::cout << audioPlayer->duration();
@@ -195,7 +195,7 @@ void MainWindow::on_actionOpen_triggered()
 {
     QFileDialog openFileDialog(this);
     currentMovie->setFile(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
-        tr("Open File"), "/", tr("Tower Light Files (*.tan2)"))));
+        tr("Open File"), "/", tr("Tower Light Files (*.tan, *.tan2)"))));
 
     ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
 }
