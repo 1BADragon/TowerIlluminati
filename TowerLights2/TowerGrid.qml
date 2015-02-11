@@ -6,26 +6,21 @@ Rectangle{
     width: 415
     height: 995
     color: "#00000000"
-    signal bang()
-    MouseArea{
-        anchors.fill: parent
-        onPositionChanged: bang()
-    }
+    signal towerClicked()
     Grid {
-        id: towerGrid
+        objectName: "towerGrid"
         rows: 20
         columns: 12
         spacing: 5
         Repeater {
+            objectName: "windows"
             model: 240
             Rectangle {
-                id: window
                 width: 25
                 height: 25
                 color: "grey"
                 border.width: 1
-                border.color: "black"
-
+                border.color: "black"                
                 MouseArea {
                     preventStealing: false
                     hoverEnabled: true
@@ -37,12 +32,14 @@ Rectangle{
                             parent.color = "grey";
                         else if (mouse.button == Qt.LeftButton)
                             parent.color = currentColor.colorToString();
+                        towerClicked();
                     }
                 }
             }
         }
     }
     Rectangle {
+        objectName: "Tower Outline"
         y:145
         x:115
         height: 305

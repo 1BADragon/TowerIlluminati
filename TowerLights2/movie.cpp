@@ -5,6 +5,7 @@ Movie::Movie()
   frameSquence = new QList <Frame*>;
   audio = new QMediaPlayer;
   currentIndex = 0;
+  currentFrameNumber = 0;
 }
 
 void Movie::setAudio(QUrl url)
@@ -54,4 +55,21 @@ void Movie::reset()
 void Movie::setFrame(int index, Frame *f)
 {
   (*frameSquence)[index] = f;
+}
+
+void Movie::setFile(QUrl url)
+{
+    mainFile = url;
+
+    //load the file
+}
+
+int Movie::getFrameNumber()
+{
+    return currentFrameNumber;
+}
+
+void Movie::setFrameNumber(int x)
+{
+    currentFrameNumber = x;
 }

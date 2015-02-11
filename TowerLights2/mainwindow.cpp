@@ -47,12 +47,11 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(cWheel, SIGNAL(colorChange(QColor)),
           this, SLOT(updateColorSpinBoxes(QColor)));
 
-  /*
-  QQuickItem *towerGrid = ui->TowerGridWidget->rootObject()->findChild<QQuickItem*>("towerGrid");
+
+  QQuickItem *towerGrid = ui->TowerGridWidget->rootObject();
   if(towerGrid != NULL)
     connect(towerGrid, SIGNAL(towerClicked()),
             this, SLOT(towerPainting()));
-  */
 
   //set some inital values for variables...
   //this is a constructor after all
@@ -61,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent) :
   //Sets the background of the widgets to be the same
   //as the mainWindow background color.
   fixPalletBackground();
+
+  //set up for a new project
+  ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
 }
 
 MainWindow::~MainWindow()
@@ -119,7 +121,46 @@ void MainWindow::updateColorSpinBoxes(QColor newColor){
 
 void MainWindow::towerPainting()
 {
+    //std::cout << "caught signal" << std::endl;
+    QList <QQuickItem *> grid = ui->TowerGridWidget->
+            rootObject()->childItems();
+    grid = grid[0]->childItems();
 
+    QList <QQuickItem *> preview = ui->Previewer->
+            rootObject()->childItems();
+    preview = preview[0]->childItems()[3]->childItems();
+
+
+
+    QQuickItem * gridMat[20][12];
+    QQuickItem * prevMat[10][4];
+
+    int count = 0;
+    for(int i = 0; i < 20; i++)
+    {
+        for(int j = 0; j < 12; j++)
+        {
+            gridMat[i][j] = grid[count++];
+        }
+    }
+
+    count = 0;
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            prevMat[i][j] = preview[count++];
+        }
+    }
+
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            prevMat[i][j]->setProperty("color",
+                gridMat[i+5][j+4]->property("color"));
+        }
+    }
 }
 
 //this function sets the background color of the widgest
@@ -153,6 +194,24 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     QFileDialog openFileDialog(this);
+    currentMovie->setFile(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
+        tr("Open File"), "/", tr("Tower Light Files (*.tan2)"))));
 
+    ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
+}
 
+void MainWindow::on_newFrameButton_clicked()
+{
+    int frameNumber = currentMovie->getFrameNumber();
+    currentMovie->insertFrame(frameNumber+1, new Frame());
+    ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
+}
+
+void MainWindow::on_previewScrollBar_valueChanged(int value)
+{
+    /*
+     * step 1 save current frame
+     * step 2 switch to frame "value"
+     * step 3 update previewer to reflect frames
+     */
 }

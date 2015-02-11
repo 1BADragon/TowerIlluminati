@@ -8,22 +8,26 @@ Rectangle {
     border.color: "grey"
 
     Grid {
+        objectName: "MainGrid"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         columns: 7
         rows: 1
         spacing: 30
         Repeater {
+            objectName: "Towers"
             model: 7
             Grid {
                 columns: 4
                 rows: 10
                 spacing: 5
                 Repeater{
+                    objectName: "Windows"
                     model: 40
                     Rectangle {
                         width: 15
                         height: 15
+                        color: "grey"
                         border.color: "black"
                     }
                 }

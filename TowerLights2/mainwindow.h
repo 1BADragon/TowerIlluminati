@@ -44,6 +44,11 @@ private slots:
 
     void on_actionOpen_triggered();
 
+
+    void on_newFrameButton_clicked();
+
+    void on_previewScrollBar_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     ColorWheel *cWheel;
@@ -52,6 +57,7 @@ private:
     QSpinBox *green;
     bool ping;
 
+    Frame *currentFrame;
     Movie *currentMovie;
 
     void fixPalletBackground();

@@ -19,14 +19,19 @@ public:
   void insertFrame(int index, Frame* f);
   void setFrame(int index, Frame* f);
   void setFrameTime(int index, qint64 time);
+  int getFrameNumber();
   Frame* next();
   void reset();
+  void setFrameNumber(int x);
+  int getFrameNumber(int x);
 
 private:
   QUrl mainFile;
   QUrl audioFile;
   QList <Frame*> *frameSquence;
   QMediaPlayer *audio;
+
+  int currentFrameNumber;
 
   int currentIndex;
 

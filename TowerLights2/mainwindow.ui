@@ -207,7 +207,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QScrollBar" name="horizontalScrollBar">
+   <widget class="QScrollBar" name="previewScrollBar">
     <property name="geometry">
      <rect>
       <x>400</x>
@@ -456,6 +456,19 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="newFrameButton">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>300</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>New Frame</string>
     </property>
    </widget>
   </widget>
