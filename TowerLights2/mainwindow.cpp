@@ -149,3 +149,10 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
     //ui->mediaSlider->setRange(0,audioPlayer->duration()/1000);
 
 }
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QFileDialog openFileDialog(this);
+
+
+}

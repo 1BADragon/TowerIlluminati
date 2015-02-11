@@ -42,6 +42,8 @@ private slots:
 
     void on_actionOpen_Audio_File_triggered();
 
+    void on_actionOpen_triggered();
+
 private:
     Ui::MainWindow *ui;
     ColorWheel *cWheel;
