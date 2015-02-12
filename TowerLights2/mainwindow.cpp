@@ -168,6 +168,15 @@ void MainWindow::on_newFrameButton_clicked()
 {
   int frameNumber = currentMovie->getFrameNumber();
   currentMovie->insertFrame(frameNumber+1, new Frame());
+  qint64 newTime;
+
+  QTime time = ui->intervalTime->time();
+
+  newTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
+
+  newTime += currentMovie->getCurrentFrame()->getTimeStamp();
+
+  currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
   updateUI();
 }
 
@@ -286,7 +295,16 @@ void MainWindow::updateUI()
   ui->previewScrollBar->setRange(0, currentMovie->getFrameCount() - 1);
 
   //Update Time Box
+  QTime tempTime;
+  qint64 msecs = currentMovie->getCurrentFrame()->getTimeStamp();
 
+  int hours = msecs/(1000*60*60);
+  int minutes = (msecs-(hours*1000*60*60))/(1000*60);
+  int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
+  int milliseconds = msecs-(seconds*1000)-(minutes*1000*60)-(hours*1000*60*60);
+
+  tempTime.setHMS(hours, minutes, seconds, milliseconds);
+  ui->currentTime->setTime(tempTime);
 }
 
 void MainWindow::setUpMats()
@@ -336,5 +354,11 @@ void MainWindow::setUpMats()
 
 void MainWindow::on_actionAfter_triggered()
 {
-    on_newFrameButton_clicked();
+  on_newFrameButton_clicked();
+}
+
+void MainWindow::on_currentTime_timeChanged(const QTime &time)
+{
+  qint64 tempTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
+  currentMovie->getCurrentFrame()->setTimeStamp(tempTime);
 }

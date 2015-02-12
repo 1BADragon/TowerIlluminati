@@ -25,6 +25,7 @@ public:
   void reset();
   void setFrameNumber(int x);
   int getFrameNumber(int x);
+  Frame* getCurrentFrame();
 
 private:
   QUrl mainFile;

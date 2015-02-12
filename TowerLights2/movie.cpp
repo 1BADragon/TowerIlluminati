@@ -76,5 +76,10 @@ int Movie::getFrameNumber()
 
 void Movie::setFrameNumber(int x)
 {
-    currentFrameNumber = x;
+  currentFrameNumber = x;
+}
+
+Frame *Movie::getCurrentFrame()
+{
+  return (*frameSequence)[currentFrameNumber];
 }

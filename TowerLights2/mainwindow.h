@@ -14,6 +14,7 @@
 #include <QPalette>
 #include <QQuickItem>
 #include <QFileDialog>
+#include <QTime>
 
 namespace Ui {
 class MainWindow;
@@ -50,6 +51,8 @@ private slots:
     void on_previewScrollBar_valueChanged(int value);
 
     void on_actionAfter_triggered();
+
+    void on_currentTime_timeChanged(const QTime &time);
 
 private:
     Ui::MainWindow *ui;

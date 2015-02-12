@@ -132,7 +132,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit">
+      <widget class="QTimeEdit" name="currentTime">
        <property name="displayFormat">
         <string>mm:ss.zzz</string>
        </property>
@@ -186,7 +186,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit_2">
+      <widget class="QTimeEdit" name="intervalTime">
        <property name="displayFormat">
         <string>mm:ss.zzz</string>
        </property>
