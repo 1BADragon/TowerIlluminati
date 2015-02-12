@@ -61,10 +61,11 @@ MainWindow::MainWindow(QWidget *parent) :
   //as the mainWindow background color.
   fixPalletBackground();
 
-  //set up for a new project
-  ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
+  //create intial frame
+  currentMovie->insertFrame(0, new Frame());
 
   setUpMats();
+  updateUI();
 }
 
 MainWindow::~MainWindow()
@@ -167,7 +168,7 @@ void MainWindow::on_newFrameButton_clicked()
 {
     int frameNumber = currentMovie->getFrameNumber();
     currentMovie->insertFrame(frameNumber+1, new Frame());
-    ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
+    updateUI();
 }
 
 void MainWindow::on_previewScrollBar_valueChanged(int value)
@@ -218,6 +219,8 @@ void MainWindow::updateUI()
                 mainTower[i][j]->property("color"));
         }
     }
+
+    ui->previewScrollBar->setRange(0, currentMovie->getFrameCount() - 1);
 }
 
 void MainWindow::setUpMats()
