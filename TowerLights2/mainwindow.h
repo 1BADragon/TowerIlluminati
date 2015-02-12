@@ -51,16 +51,25 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
     ColorWheel *cWheel;
+
     QSpinBox *red;
     QSpinBox *blue;
     QSpinBox *green;
+
+    QQuickItem *previewTower[10][4];
+    QQuickItem *fullTower[20][12];
+    QQuickItem *mainTower[10][4];
+
     bool ping;
 
     Frame *currentFrame;
     Movie *currentMovie;
 
     void fixPalletBackground();
+    void updateUI();
+    void setUpMats();
 
 };
 

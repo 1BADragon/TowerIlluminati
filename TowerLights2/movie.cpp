@@ -44,7 +44,12 @@ void Movie::setFrameTime(int index, qint64 time)
 
 Frame* Movie::next()
 {
-  return frameSequence->at(currentIndex++);
+    return frameSequence->at(currentIndex++);
+}
+
+Frame *Movie::getFrame(int i)
+{
+    return frameSequence->at(i);
 }
 
 void Movie::reset()

@@ -2,13 +2,13 @@
 
 Frame::Frame()
 {
-    for(int i = 0; i < FULLGRIDWIDTH; i++){
-        for(int j = 0; j < FULLGRIDHEIGHT; j++){
+    for(int i = 0; i < FULLGRIDHEIGHT; i++){
+        for(int j = 0; j < FULLGRIDWIDTH; j++){
             fullGrid[i][j] = new Pixel();
         }
     }
-    for(int i = 0; i < TOWERWIDTH; i++){
-        for(int j = 0; j < TOWERHEIGHT; j++){
+    for(int i = 0; i < TOWERHEIGHT; i++){
+        for(int j = 0; j < TOWERWIDTH; j++){
             towerGrid[i][j] = fullGrid[i+4][j+5];
         }
     }
@@ -17,13 +17,13 @@ Frame::Frame()
 
 Frame::Frame(const Frame &original)
 {
-    for(int i = 0; i < FULLGRIDWIDTH; i++){
-        for(int j = 0; j < FULLGRIDHEIGHT; j++){
+    for(int i = 0; i < FULLGRIDHEIGHT; i++){
+        for(int j = 0; j < FULLGRIDWIDTH; j++){
             fullGrid[i][j] = new Pixel(original.fullGrid[i][j]->getColor());
         }
     }
-    for(int i = 0; i < TOWERWIDTH; i++){
-        for(int j = 0; j < TOWERHEIGHT; j++){
+    for(int i = 0; i < TOWERHEIGHT; i++){
+        for(int j = 0; j < TOWERWIDTH; j++){
             towerGrid[i][j] = fullGrid[i+4][j+5];
         }
     }

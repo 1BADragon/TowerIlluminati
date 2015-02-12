@@ -63,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //set up for a new project
   ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
+
+  setUpMats();
 }
 
 MainWindow::~MainWindow()
@@ -121,46 +123,7 @@ void MainWindow::updateColorSpinBoxes(QColor newColor){
 
 void MainWindow::towerPainting()
 {
-    //std::cout << "caught signal" << std::endl;
-    QList <QQuickItem *> grid = ui->TowerGridWidget->
-            rootObject()->childItems();
-    grid = grid[0]->childItems();
-
-    QList <QQuickItem *> preview = ui->Previewer->
-            rootObject()->childItems();
-    preview = preview[0]->childItems()[3]->childItems();
-
-
-
-    QQuickItem * gridMat[20][12];
-    QQuickItem * prevMat[10][4];
-
-    int count = 0;
-    for(int i = 0; i < 20; i++)
-    {
-        for(int j = 0; j < 12; j++)
-        {
-            gridMat[i][j] = grid[count++];
-        }
-    }
-
-    count = 0;
-    for(int i = 0; i < 10; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            prevMat[i][j] = preview[count++];
-        }
-    }
-
-    for(int i = 0; i < 10; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            prevMat[i][j]->setProperty("color",
-                gridMat[i+5][j+4]->property("color"));
-        }
-    }
+    updateUI();
 }
 
 //this function sets the background color of the widgest
@@ -214,4 +177,85 @@ void MainWindow::on_previewScrollBar_valueChanged(int value)
      * step 2 switch to frame "value"
      * step 3 update previewer to reflect frames
      */
+    Frame *temp = currentMovie->getFrame(currentMovie->getFrameNumber());
+    QColor tempC;
+
+
+
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            tempC = fullTower[i][j]->property("color").value<QColor>();
+            temp->setFullGridPixel(i, j, tempC);
+        }
+    }
+
+    temp = currentMovie->getFrame(value);
+    currentMovie->setFrameNumber(value);
+
+
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            fullTower[i][j]->setProperty("color",temp->FullGridPixel(i,j)->getColor());
+        }
+    }
+
+    updateUI();
+}
+
+void MainWindow::updateUI()
+{
+
+    //Update previewer
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            previewTower[i][j]->setProperty("color",
+                mainTower[i][j]->property("color"));
+        }
+    }
+}
+
+void MainWindow::setUpMats()
+{
+    QList <QQuickItem *> grid = ui->TowerGridWidget->
+            rootObject()->childItems();
+    grid = grid[0]->childItems();
+
+    QList <QQuickItem *> preview = ui->Previewer->
+            rootObject()->childItems();
+    preview = preview[0]->childItems()[3]->childItems();
+
+
+
+    int count = 0;
+    for(int i = 0; i < 20; i++)
+    {
+        for(int j = 0; j < 12; j++)
+        {
+            fullTower[i][j] = grid[count++];
+        }
+    }
+
+    count = 0;
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            previewTower[i][j] = preview[count++];
+        }
+    }
+
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            mainTower[i][j] = fullTower[i+5][j+4];
+        }
+    }
+
 }

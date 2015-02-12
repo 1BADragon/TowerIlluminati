@@ -22,7 +22,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     grid.cpp \
     pixel.cpp \
-    pixelgroup.cpp \
     frame.cpp \
     movie.cpp \
     colorwheel.cpp \
@@ -32,7 +31,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     grid.h \
     pixel.h \
-    pixelgroup.h \
     frame.h \
     movie.h \
     colorwheel.h \

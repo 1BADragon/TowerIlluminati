@@ -21,6 +21,7 @@ public:
   void setFrameTime(int index, qint64 time);
   int getFrameNumber();
   Frame* next();
+  Frame* getFrame(int i);
   void reset();
   void setFrameNumber(int x);
   int getFrameNumber(int x);

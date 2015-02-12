@@ -22,8 +22,8 @@ public:
     Pixel *TowerGridPixel(int x, int y);
 
 private:
-    Pixel* fullGrid[12][20];
-    Pixel* towerGrid[4][10];
+    Pixel* fullGrid[20][12];
+    Pixel* towerGrid[10][4];
     qint64 timeStamp;
 };
 
