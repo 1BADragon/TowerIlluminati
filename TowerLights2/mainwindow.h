@@ -49,6 +49,8 @@ private slots:
 
     void on_previewScrollBar_valueChanged(int value);
 
+    void on_actionAfter_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -58,7 +60,7 @@ private:
     QSpinBox *blue;
     QSpinBox *green;
 
-    QQuickItem *previewTower[10][4];
+    QQuickItem *previewTowers[7][10][4];
     QQuickItem *fullTower[20][12];
     QQuickItem *mainTower[10][4];
 

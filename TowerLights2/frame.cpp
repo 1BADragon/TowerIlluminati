@@ -9,7 +9,7 @@ Frame::Frame()
     }
     for(int i = 0; i < TOWERHEIGHT; i++){
         for(int j = 0; j < TOWERWIDTH; j++){
-            towerGrid[i][j] = fullGrid[i+4][j+5];
+            towerGrid[i][j] = fullGrid[i+5][j+4];
         }
     }
     timeStamp = 0;
