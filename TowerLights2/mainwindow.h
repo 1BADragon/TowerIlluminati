@@ -31,6 +31,8 @@ public:
 private slots:
     void on_actionExit_triggered();
 
+    void on_actionExport_triggered();
+
     void on_redSpinBox_valueChanged(int arg1);
 
     void on_blueSpinBox_valueChanged(int arg1);
