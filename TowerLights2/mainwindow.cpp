@@ -85,16 +85,19 @@ void MainWindow::on_actionExport_triggered()
 {
     //get filename and location for save
     QString fileName = QFileDialog::getSaveFileName(this, tr("Export File"),
-                                "/home/jana/untitled.tan",
+                                "/home/untitled.tan",
                                 tr("Images (*.tan)"));
     // Create a new file
     QFile file(fileName);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
     out << "First Value: Can't remember where this value comes from\n";
-    out << red->value() << " " << green->value() << " " << blue->value() << " 0 0 0 0 0 0\n";
-    out << "First row of color pallet RGB values\n";
-    out << "Second row of color pallet RGB values\n";
+    out << red->value() << " " << green->value() << " " << blue->value()
+        << " 0 0 0 0 0 0\n";
+    out << "First row of color pallet RGB values"
+        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << "Second row of color pallet RGB values"
+        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
     out << currentMovie->getFrameCount() << " 10 4\n";
 
     int temp = currentMovie->getFrameCount();
@@ -105,7 +108,18 @@ void MainWindow::on_actionExport_triggered()
         {
             for(int k = 0; k < 4; k++)
             {
-                //out << currentMovie->getFrame(i)->TowerGridPixel(j,k)->getColor() << " ";
+                QColor tempColor = currentMovie->getFrame(i)->TowerGridPixel(j,k)->getColor();
+                QString tempRed = QString("%1").arg(tempColor.red());
+                QString tempGreen = QString("%1").arg(tempColor.green());
+                QString tempBlue = QString("%1").arg(tempColor.blue());
+                if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                {
+                    out << "0 0 0 ";
+                }
+                else
+                {
+                    out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+                }
                 if( k == 3)
                 {
                     out << "\n";
