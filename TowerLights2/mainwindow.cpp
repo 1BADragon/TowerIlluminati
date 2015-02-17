@@ -1,6 +1,9 @@
 #include <QFileDialog>
 #include "mainwindow.h"
 
+//Set Global Filename
+QString fileName;
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -84,13 +87,15 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionExport_triggered()
 {
     //get filename and location for save
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export File"),
+    QString exportFileName = QFileDialog::getSaveFileName(this, tr("Export File"),
                                 "/home/untitled.tan",
                                 tr("Images (*.tan)"));
     // Create a new file
-    QFile file(fileName);
+    QFile file(exportFileName);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
+
+    //Output values to file
     out << "First Value: Can't remember where this value comes from\n";
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
@@ -121,6 +126,115 @@ void MainWindow::on_actionExport_triggered()
                     out << tempRed << " " << tempGreen << " " << tempBlue << " ";
                 }
                 if( k == 3)
+                {
+                    out << "\n";
+                }
+            }
+        }
+    }
+
+    file.close();
+}
+
+//this function is called when file>>Save As is selected
+void MainWindow::on_actionSave_As_triggered()
+{
+    //get filename and location for save
+    fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                "/home/untitled.tan2",
+                                tr("Images (*.tan2)"));
+    // Create a new file
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+
+    //Output values to file
+    out << "First Value: Can't remember where this value comes from\n";
+    out << red->value() << " " << green->value() << " " << blue->value()
+        << " 0 0 0 0 0 0\n";
+    out << "First row of color pallet RGB values"
+        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << "Second row of color pallet RGB values"
+        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << currentMovie->getFrameCount() << " 10 4\n";
+
+    int temp = currentMovie->getFrameCount();
+    for(int i = 0; i < temp; i++)
+    {
+        out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
+        for(int j = 0; j < 20; j++)
+        {
+            for(int k = 0; k < 12; k++)
+            {
+                QColor tempColor = currentMovie->getFrame(i)->FullGridPixel(j,k)->getColor();
+                QString tempRed = QString("%1").arg(tempColor.red());
+                QString tempGreen = QString("%1").arg(tempColor.green());
+                QString tempBlue = QString("%1").arg(tempColor.blue());
+                if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                {
+                    out << "0 0 0 ";
+                }
+                else
+                {
+                    out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+                }
+                if( k == 11)
+                {
+                    out << "\n";
+                }
+            }
+        }
+    }
+
+    file.close();
+}
+
+//this function is called when file>>Save is selected
+void MainWindow::on_actionSave_triggered()
+{
+    if(fileName == NULL)
+    {
+        //get filename and location for save
+        fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                "/home/untitled.tan2",
+                                tr("Images (*.tan2)"));
+    }
+    // Create a new file
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+
+    //Output values to file
+    out << "First Value: Can't remember where this value comes from\n";
+    out << red->value() << " " << green->value() << " " << blue->value()
+        << " 0 0 0 0 0 0\n";
+    out << "First row of color pallet RGB values"
+        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << "Second row of color pallet RGB values"
+        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << currentMovie->getFrameCount() << " 10 4\n";
+
+    int temp = currentMovie->getFrameCount();
+    for(int i = 0; i < temp; i++)
+    {
+        out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
+        for(int j = 0; j < 20; j++)
+        {
+            for(int k = 0; k < 12; k++)
+            {
+                QColor tempColor = currentMovie->getFrame(i)->FullGridPixel(j,k)->getColor();
+                QString tempRed = QString("%1").arg(tempColor.red());
+                QString tempGreen = QString("%1").arg(tempColor.green());
+                QString tempBlue = QString("%1").arg(tempColor.blue());
+                if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                {
+                    out << "0 0 0 ";
+                }
+                else
+                {
+                    out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+                }
+                if( k == 11)
                 {
                     out << "\n";
                 }
