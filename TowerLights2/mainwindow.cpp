@@ -306,6 +306,23 @@ void MainWindow::fixPalletBackground(){
   windowScroll->setClearColor(QColor(240,240,240));
 }
 
+void MainWindow::saveCurrentFrame()
+{
+  Frame *temp = currentMovie->getFrame(currentMovie->getFrameNumber());
+  QColor tempC;
+
+
+
+  for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+      for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+          tempC = fullTower[i][j]->property("color").value<QColor>();
+          temp->setFullGridPixel(i, j, tempC);
+        }
+    }
+}
+
 void MainWindow::on_actionOpen_Audio_File_triggered()
 {
   QFileDialog openAudioDialog(this);

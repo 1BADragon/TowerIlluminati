@@ -80,6 +80,7 @@ private:
     Movie *currentMovie;
 
     void fixPalletBackground();
+    void saveCurrentFrame();
     void updateUI();
     void setUpMats();
 
