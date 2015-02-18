@@ -96,7 +96,8 @@ void MainWindow::on_actionExport_triggered()
     QTextStream out(&file);
 
     //Output values to file
-    out << "First Value: Can't remember where this value comes from\n";
+    out << "0.3\n";
+    //Current Color
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
     out << "First row of color pallet RGB values"
@@ -149,14 +150,14 @@ void MainWindow::on_actionSave_As_triggered()
     QTextStream out(&file);
 
     //Output values to file
-    out << "First Value: Can't remember where this value comes from\n";
+    out << "0.4\n";
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
     out << "First row of color pallet RGB values"
         << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
     out << "Second row of color pallet RGB values"
         << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << currentMovie->getFrameCount() << " 10 4\n";
+    out << currentMovie->getFrameCount() << " 10 4\n"; //Not sure if this should still be "10 4"
 
     int temp = currentMovie->getFrameCount();
     for(int i = 0; i < temp; i++)
@@ -205,14 +206,14 @@ void MainWindow::on_actionSave_triggered()
     QTextStream out(&file);
 
     //Output values to file
-    out << "First Value: Can't remember where this value comes from\n";
+    out << "0.4\n";
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
     out << "First row of color pallet RGB values"
         << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
     out << "Second row of color pallet RGB values"
         << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << currentMovie->getFrameCount() << " 10 4\n";
+    out << currentMovie->getFrameCount() << " 10 4\n";//Not sure if this should still be "10 4"
 
     int temp = currentMovie->getFrameCount();
     for(int i = 0; i < temp; i++)
