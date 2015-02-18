@@ -72,6 +72,7 @@ private:
     QQuickItem *previewTowers[7][10][4];
     QQuickItem *fullTower[20][12];
     QQuickItem *mainTower[10][4];
+    QQuickItem *colorPallet[2][8];
 
     bool ping;
 

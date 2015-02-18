@@ -517,6 +517,14 @@ void MainWindow::setUpMats()
         }
     }
 
+  //Color Pallet
+
+  QList<QQuickItem *> colorP = ui->colorPalletWidget->rootObject()->childItems()[0]->childItems();
+  count = 0;
+  for(int i = 0; i < 2; i++)
+    for(int j = 0; j < 8; j++)
+      colorPallet[i][j] = colorP[count++];
+
 }
 
 void MainWindow::on_actionAfter_triggered()

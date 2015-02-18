@@ -6,12 +6,13 @@ Rectangle {
     height: 61
     color: "#00000000"
     Grid{
-        id: colorPallet
+        objectName: "colorPallet"
         rows: 2
         columns: 8
         spacing: 5
         Repeater{
             model: 16
+            objectName: "Pallet"
             Rectangle{
                 width: 25
                 height: 25
