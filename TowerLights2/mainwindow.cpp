@@ -86,6 +86,8 @@ void MainWindow::on_actionExit_triggered()
 //this function is called when file>>export is selected
 void MainWindow::on_actionExport_triggered()
 {
+    saveCurrentFrame();
+
     //get filename and location for save
     QString exportFileName = QFileDialog::getSaveFileName(this, tr("Export File"),
                                 "/home/untitled.tan",
@@ -95,17 +97,34 @@ void MainWindow::on_actionExport_triggered()
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
 
-    //Output values to file
+    //Version Number
     out << "0.3\n";
+
     //Current Color
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
-    out << "First row of color pallet RGB values"
-        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << "Second row of color pallet RGB values"
-        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+
+    //Color Pallet RGB values
+    for(int i = 0; i < 2; i++)
+    {
+      for(int j = 0; j < 8; j++)
+      {
+          QVariant temp = colorPallet[i][j]->property("color");
+          QColor tempColor = temp.value<QColor>();
+          QString tempRed = QString("%1").arg(tempColor.red());
+          QString tempGreen = QString("%1").arg(tempColor.green());
+          QString tempBlue = QString("%1").arg(tempColor.blue());
+          out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+       }
+    }
+    out << "0 0 0 0 0 0\n";
+    out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
+           "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+
+    //Current Color
     out << currentMovie->getFrameCount() << " 10 4\n";
 
+    //RGB Values for each pixel of each frame
     int temp = currentMovie->getFrameCount();
     for(int i = 0; i < temp; i++)
     {
@@ -140,6 +159,8 @@ void MainWindow::on_actionExport_triggered()
 //this function is called when file>>Save As is selected
 void MainWindow::on_actionSave_As_triggered()
 {
+    saveCurrentFrame();
+
     //get filename and location for save
     fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                 "/home/untitled.tan2",
@@ -149,16 +170,34 @@ void MainWindow::on_actionSave_As_triggered()
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
 
-    //Output values to file
+    //Version Number
     out << "0.4\n";
+
+    //Current Color
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
-    out << "First row of color pallet RGB values"
-        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << "Second row of color pallet RGB values"
-        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << currentMovie->getFrameCount() << " 10 4\n"; //Not sure if this should still be "10 4"
 
+    //Color Pallet RGB values
+    for(int i = 0; i < 2; i++)
+    {
+      for(int j = 0; j < 8; j++)
+      {
+          QVariant temp = colorPallet[i][j]->property("color");
+          QColor tempColor = temp.value<QColor>();
+          QString tempRed = QString("%1").arg(tempColor.red());
+          QString tempGreen = QString("%1").arg(tempColor.green());
+          QString tempBlue = QString("%1").arg(tempColor.blue());
+          out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+       }
+    }
+    out << "0 0 0 0 0 0\n";
+    out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
+           "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+
+    //Current Color
+    out << currentMovie->getFrameCount() << " 10 4\n";
+
+    //RGB Values for each pixel of each frame
     int temp = currentMovie->getFrameCount();
     for(int i = 0; i < temp; i++)
     {
@@ -193,6 +232,8 @@ void MainWindow::on_actionSave_As_triggered()
 //this function is called when file>>Save is selected
 void MainWindow::on_actionSave_triggered()
 {
+    saveCurrentFrame();
+
     if(fileName == NULL)
     {
         //get filename and location for save
@@ -205,16 +246,34 @@ void MainWindow::on_actionSave_triggered()
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
 
-    //Output values to file
+    //Version Number
     out << "0.4\n";
+
+    //Current Color
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
-    out << "First row of color pallet RGB values"
-        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << "Second row of color pallet RGB values"
-        << " 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
-    out << currentMovie->getFrameCount() << " 10 4\n";//Not sure if this should still be "10 4"
 
+    //Color Pallet RGB values
+    for(int i = 0; i < 2; i++)
+    {
+      for(int j = 0; j < 8; j++)
+      {
+          QVariant temp = colorPallet[i][j]->property("color");
+          QColor tempColor = temp.value<QColor>();
+          QString tempRed = QString("%1").arg(tempColor.red());
+          QString tempGreen = QString("%1").arg(tempColor.green());
+          QString tempBlue = QString("%1").arg(tempColor.blue());
+          out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+       }
+    }
+    out << "0 0 0 0 0 0\n";
+    out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
+           "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+
+    //Current Color
+    out << currentMovie->getFrameCount() << " 10 4\n";
+
+    //RGB Values for each pixel of each frame
     int temp = currentMovie->getFrameCount();
     for(int i = 0; i < temp; i++)
     {
@@ -536,7 +595,8 @@ void MainWindow::setUpMats()
 
   //Color Pallet
 
-  QList<QQuickItem *> colorP = ui->colorPalletWidget->rootObject()->childItems()[0]->childItems();
+  QList<QQuickItem *> colorP = ui->colorPalletWidget->rootObject()->
+          childItems()[0]->childItems();
   count = 0;
   for(int i = 0; i < 2; i++)
     for(int j = 0; j < 8; j++)
