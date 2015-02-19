@@ -128,7 +128,18 @@ void MainWindow::on_actionExport_triggered()
     int temp = currentMovie->getFrameCount();
     for(int i = 0; i < temp; i++)
     {
-        out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
+        //Get timestamp of frame and convert to correct format for output
+        qint64 msecs = currentMovie->getFrame(i)->getTimeStamp();
+        int hours = msecs/(1000*60*60);
+        int minutes = (msecs-(hours*1000*60*60))/(1000*60);
+        int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
+        int milliseconds = msecs-(seconds*1000)-(minutes*1000*60)-(hours*1000*60*60);
+        //pad output with zeroes
+        QString tempMin = QString("%1").arg(minutes, 2, 10, QChar('0'));
+        QString tempSec = QString("%1").arg(seconds, 2, 10, QChar('0'));
+        QString tempMilli = QString("%1").arg(milliseconds, 3, 10, QChar('0'));
+        out << tempMin << ":" << tempSec << "." << tempMilli << "\n";
+
         for(int j = 0; j < 10; j++)
         {
             for(int k = 0; k < 4; k++)
