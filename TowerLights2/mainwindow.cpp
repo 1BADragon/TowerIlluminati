@@ -121,7 +121,7 @@ void MainWindow::on_actionExport_triggered()
     out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
            "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
 
-    //Current Color
+    //Frame Count and size
     out << currentMovie->getFrameCount() << " 10 4\n";
 
     //RGB Values for each pixel of each frame
@@ -205,7 +205,7 @@ void MainWindow::on_actionSave_As_triggered()
     out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
            "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
 
-    //Current Color
+    //Frame Count and size
     out << currentMovie->getFrameCount() << " 10 4\n";
 
     //RGB Values for each pixel of each frame
@@ -281,7 +281,7 @@ void MainWindow::on_actionSave_triggered()
     out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
            "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
 
-    //Current Color
+    //Frame Count and size
     out << currentMovie->getFrameCount() << " 10 4\n";
 
     //RGB Values for each pixel of each frame
