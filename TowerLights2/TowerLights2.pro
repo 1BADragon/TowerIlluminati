@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     movie.cpp \
     colorwheel.cpp \
     color.cpp \
-    colorpalette.cpp
+    colorpalette.cpp \
+    timer.cpp
 
 HEADERS  += mainwindow.h \
     grid.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     movie.h \
     colorwheel.h \
     color.h \
-    colorpalette.h
+    colorpalette.h \
+    timer.h
 
 FORMS    += mainwindow.ui
 

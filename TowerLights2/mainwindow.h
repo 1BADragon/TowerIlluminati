@@ -6,6 +6,7 @@
 #include "colorwheel.h"
 #include "colorpalette.h"
 #include "movie.h"
+#include "time.h"
 #include <cstdlib>
 #include <iostream>
 #include <QtDeclarative/QDeclarativeView>
