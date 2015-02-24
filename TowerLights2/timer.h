@@ -1,6 +1,6 @@
 #ifndef TIMER_H
 #define TIMER_H
-#include <QDateTime>
+#include <QTime>
 
 class Timer
 {
@@ -13,7 +13,7 @@ public:
     qint64 getTime();
 
 private:
-    QDateTime time;
+    QTime timer;
     qint64 startTime;
     qint64 offset;
 };

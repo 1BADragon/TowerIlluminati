@@ -431,6 +431,8 @@ void MainWindow::on_newFrameButton_clicked()
   newTime += currentMovie->getCurrentFrame()->getTimeStamp();
 
   currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
+  ui->previewScrollBar->setRange(0,currentMovie->getFrameCount());
+  ui->previewScrollBar->setValue(frameNumber+1);
   updateUI();
 }
 
@@ -640,18 +642,26 @@ void MainWindow::on_playPauseButton_clicked()
         if(currentFrameNumber < maxFrames){
             qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
             qDebug() << "currentTime: " << timer.getTime();
-            if(currentFrame->getTimeStamp() <= timer.getTime()){
-                on_previewScrollBar_valueChanged(currentFrameNumber + 1);
-                currentFrameNumber++;
+            qDebug() << "currentFrame: " << currentFrame;
+            qDebug() << "currentFrameNumber: " << currentFrameNumber;
+            qDebug() << "maxFrames: " << maxFrames;
+            qDebug() << "";
+            if(nextFrame->getTimeStamp() <= timer.getTime()){
+                //on_previewScrollBar_valueChanged(currentFrameNumber + 1);
+                ui->previewScrollBar->setValue(currentFrameNumber +1);
                 currentFrame = nextFrame;
-                currentMovie->setFrameNumber(currentFrameNumber);
-                nextFrame = currentMovie->getNextFrame();
+                if(++currentFrameNumber < maxFrames){
+                    currentMovie->setFrameNumber(currentFrameNumber);
+                    nextFrame = currentMovie->getFrame(currentFrameNumber+1);
+                }
+                else {
+                    stop = true;
+                }
             }
         }
         else{
             stop = true;
-        }
-        qDebug() << currentFrameNumber;
+        }        
     }
     timer.stop();
 }

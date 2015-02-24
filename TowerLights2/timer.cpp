@@ -12,12 +12,12 @@ Timer::~Timer()
 
 void Timer::start(){
     this->offset = 0;
-    startTime = time.toMSecsSinceEpoch();
+    timer.start();
 }
 
 void Timer::start(qint64 offset){
     this->offset = offset;
-    startTime = time.toMSecsSinceEpoch();
+    timer.start();
 }
 
 void Timer::stop(){
@@ -25,6 +25,6 @@ void Timer::stop(){
 }
 
 qint64 Timer::getTime(){
-    return (time.toMSecsSinceEpoch() - startTime) + offset;
+    return timer.elapsed() + offset;
 }
 
