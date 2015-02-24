@@ -68,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
   //create intial frame
   currentMovie->insertFrame(0, new Frame());
 
+  QTime tempTime(0,0,0,250);
+  ui->intervalTime->setMinimumTime(tempTime);
   setUpMats();
   updateUI();
 }
@@ -432,38 +434,7 @@ void MainWindow::on_newFrameButton_clicked()
 
 void MainWindow::on_previewScrollBar_valueChanged(int value)
 {
-  /*
-     * step 1 save current frame
-     * step 2 switch to frame "value"
-     * step 3 update previewer to reflect frames
-     */
-  Frame *temp = currentMovie->getFrame(currentMovie->getFrameNumber());
-  QColor tempC;
-
-
-
-  for(int i = 0; i < FULLGRIDHEIGHT; i++)
-    {
-      for(int j = 0; j < FULLGRIDWIDTH; j++)
-        {
-          tempC = fullTower[i][j]->property("color").value<QColor>();
-          temp->setFullGridPixel(i, j, tempC);
-        }
-    }
-
-  temp = currentMovie->getFrame(value);
-  currentMovie->setFrameNumber(value);
-
-
-  for(int i = 0; i < FULLGRIDHEIGHT; i++)
-    {
-      for(int j = 0; j < FULLGRIDWIDTH; j++)
-        {
-          fullTower[i][j]->setProperty("color",temp->FullGridPixel(i,j)->getColor());
-        }
-    }
-
-  updateUI();
+  changeCurrentFrame(value);
 }
 
 void MainWindow::updateUI()
@@ -508,6 +479,7 @@ void MainWindow::updateUI()
                 }
             }
         }
+      qApp->processEvents();
     }
 
   //Upcoming Frames
@@ -611,6 +583,42 @@ void MainWindow::setUpMats()
 
 }
 
+void MainWindow::changeCurrentFrame(int value)
+{
+    /*
+       * step 1 save current frame
+       * step 2 switch to frame "value"
+       * step 3 update previewer to reflect frames
+       */
+    Frame *tempFrame = currentMovie->getFrame(currentMovie->getFrameNumber());
+    QColor tempC;
+
+
+
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+      {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+          {
+            tempC = fullTower[i][j]->property("color").value<QColor>();
+            tempFrame->setFullGridPixel(i, j, tempC);
+          }
+      }
+
+    tempFrame = currentMovie->getFrame(value);
+    currentMovie->setFrameNumber(value);
+
+
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+      {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+          {
+            fullTower[i][j]->setProperty("color",tempFrame->FullGridPixel(i,j)->getColor());
+          }
+      }
+
+    updateUI();
+}
+
 void MainWindow::on_actionAfter_triggered()
 {
   on_newFrameButton_clicked();
@@ -634,30 +642,36 @@ void MainWindow::on_playPauseButton_clicked()
 
     while(stop == false){
         if(currentFrameNumber < maxFrames){
-            qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
-            qDebug() << "currentTime: " << timer.getTime();
-            qDebug() << "currentFrame: " << currentFrame;
-            qDebug() << "currentFrameNumber: " << currentFrameNumber;
-            qDebug() << "maxFrames: " << maxFrames;
-            qDebug() << "";
-            if(nextFrame->getTimeStamp() <= timer.getTime()){
-                //on_previewScrollBar_valueChanged(currentFrameNumber + 1);
-                ui->previewScrollBar->setValue(currentFrameNumber +1);
+            //qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
+            //qDebug() << "currentTime: " << timer.getTime();
+            //qDebug() << "currentFrame: " << currentFrame;
+            //qDebug() << "currentFrameNumber: " << currentFrameNumber;
+            //qDebug() << "maxFrames: " << maxFrames;
+            //qDebug() << "";
+            if(nextFrame->getTimeStamp() <= timer.getTime())
+            {
+                changeCurrentFrame(currentFrameNumber);
                 currentFrame = nextFrame;
-                if(++currentFrameNumber < maxFrames){
+
+                if((currentFrameNumber + 1) < maxFrames)
+                {
                     currentMovie->setFrameNumber(currentFrameNumber);
                     nextFrame = currentMovie->getFrame(currentFrameNumber+1);
-                }
-                else {
+                    currentFrameNumber += 1;
+                }                
+                else
+                {
                     stop = true;
                 }
             }
         }
         else{
             stop = true;
-        }        
+        }
+        updateUI();
     }
     timer.stop();
+    ui->previewScrollBar->setValue(currentFrameNumber);
 }
 
 void MainWindow::on_stopButton_clicked()

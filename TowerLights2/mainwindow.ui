@@ -187,6 +187,13 @@
      </item>
      <item>
       <widget class="QTimeEdit" name="intervalTime">
+       <property name="minimumTime">
+        <time>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+        </time>
+       </property>
        <property name="displayFormat">
         <string>mm:ss.zzz</string>
        </property>
