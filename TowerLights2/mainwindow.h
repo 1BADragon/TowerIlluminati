@@ -90,6 +90,7 @@ private:
     void saveCurrentFrame();
     void updateUI();
     void setUpMats();
+    void changeCurrentFrame(int value);
 
 };
 
