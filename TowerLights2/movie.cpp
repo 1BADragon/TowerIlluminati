@@ -42,9 +42,9 @@ void Movie::setFrameTime(int index, qint64 time)
   frameSequence->at(index)->setTimeStamp(time);
 }
 
-Frame* Movie::next()
+Frame* Movie::getNextFrame()
 {
-    return frameSequence->at(currentIndex++);
+    return frameSequence->at(currentIndex + 1);
 }
 
 Frame *Movie::getFrame(int i)

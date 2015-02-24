@@ -20,7 +20,7 @@ public:
   void setFrame(int index, Frame* f);
   void setFrameTime(int index, qint64 time);
   int getFrameNumber();
-  Frame* next();
+  Frame* getNextFrame();
   Frame* getFrame(int i);
   void reset();
   void setFrameNumber(int x);

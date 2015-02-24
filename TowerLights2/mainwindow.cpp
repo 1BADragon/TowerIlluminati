@@ -625,3 +625,38 @@ void MainWindow::on_currentTime_timeChanged(const QTime &time)
   qint64 tempTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
   currentMovie->getCurrentFrame()->setTimeStamp(tempTime);
 }
+
+void MainWindow::on_playPauseButton_clicked()
+{
+    saveCurrentFrame();
+    stop = false;
+    int currentFrameNumber = currentMovie->getFrameNumber();
+    int maxFrames = currentMovie->getFrameCount();
+    Frame* currentFrame = currentMovie->getCurrentFrame();
+    Frame* nextFrame = currentMovie->getNextFrame();
+    timer.start(currentFrame->getTimeStamp());
+
+    while(stop == false){
+        if(currentFrameNumber < maxFrames){
+            qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
+            qDebug() << "currentTime: " << timer.getTime();
+            if(currentFrame->getTimeStamp() <= timer.getTime()){
+                on_previewScrollBar_valueChanged(currentFrameNumber + 1);
+                currentFrameNumber++;
+                currentFrame = nextFrame;
+                currentMovie->setFrameNumber(currentFrameNumber);
+                nextFrame = currentMovie->getNextFrame();
+            }
+        }
+        else{
+            stop = true;
+        }
+        qDebug() << currentFrameNumber;
+    }
+    timer.stop();
+}
+
+void MainWindow::on_stopButton_clicked()
+{
+    stop = true;
+}

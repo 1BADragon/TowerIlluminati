@@ -6,7 +6,7 @@
 #include "colorwheel.h"
 #include "colorpalette.h"
 #include "movie.h"
-#include "time.h"
+#include "timer.h"
 #include <cstdlib>
 #include <iostream>
 #include <QtDeclarative/QDeclarativeView>
@@ -61,6 +61,10 @@ private slots:
 
     void on_currentTime_timeChanged(const QTime &time);
 
+    void on_playPauseButton_clicked();
+
+    void on_stopButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -76,9 +80,11 @@ private:
     QQuickItem *colorPallet[2][8];
 
     bool ping;
+    bool stop;
 
-    Frame *currentFrame;
     Movie *currentMovie;
+
+    Timer timer;
 
     void fixPalletBackground();
     void saveCurrentFrame();
