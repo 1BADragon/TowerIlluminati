@@ -395,17 +395,11 @@ void MainWindow::saveCurrentFrame()
 
 void MainWindow::on_actionOpen_Audio_File_triggered()
 {
-  QFileDialog openAudioDialog(this);
-  //openAudioDialog.setVisible(true);
-  //if (openAudioDialog.exec())
-  //    openAudioDialog.urlSelected(currentMovie->audioFile);
   currentMovie->setAudio(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
                                                                           tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)"))));
-  //std::cout << "File is" << currentMovie->getAudioFile().toString().toStdString() << std::endl;
-  //std::cerr << currentMovie->audioFile.toString().toStdString();
-  //audioPlayer->setMedia(currentMovie->audioFile);
-  //std::cout << audioPlayer->duration();
-  //ui->mediaSlider->setRange(0,audioPlayer->duration()/1000);
+  currentMovie->audio->setMedia(currentMovie->getAudioFile());
+  currentMovie->audio->stop();
+  ui->mediaSlider->setRange(0,currentMovie->audio->duration()/1000);
 
 }
 

@@ -26,12 +26,13 @@ public:
   void setFrameNumber(int x);
   int getFrameNumber(int x);
   Frame* getCurrentFrame();
+  QMediaPlayer *audio;
 
 private:
   QUrl mainFile;
   QUrl audioFile;
   QList <Frame*> *frameSequence;
-  QMediaPlayer *audio;
+
 
   int currentFrameNumber;
 
