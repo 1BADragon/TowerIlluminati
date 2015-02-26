@@ -102,26 +102,17 @@ void MainWindow::on_actionExport_triggered()
     //Version Number
     out << "0.3\n";
 
-    //Current Color
-    out << red->value() << " " << green->value() << " " << blue->value()
-        << " 0 0 0 0 0 0\n";
-
-    //Color Pallet RGB values
-    for(int i = 0; i < 2; i++)
+    //Audio filename
+    QUrl tempAF = currentMovie->getAudioFile();
+    if(tempAF.isEmpty() == false)
     {
-      for(int j = 0; j < 8; j++)
-      {
-          QVariant temp = colorPallet[i][j]->property("color");
-          QColor tempColor = temp.value<QColor>();
-          QString tempRed = QString("%1").arg(tempColor.red());
-          QString tempGreen = QString("%1").arg(tempColor.green());
-          QString tempBlue = QString("%1").arg(tempColor.blue());
-          out << tempRed << " " << tempGreen << " " << tempBlue << " ";
-       }
+        QString tempAudioFile = tempAF.toEncoded();
+        out << tempAudioFile << "\n";
     }
-    out << "0 0 0 0 0 0\n";
-    out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
-           "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    else
+    {
+        out << "NoAudioFile\n";
+    }
 
     //Frame Count and size
     out << currentMovie->getFrameCount() << " 10 4\n";
@@ -186,6 +177,18 @@ void MainWindow::on_actionSave_As_triggered()
     //Version Number
     out << "0.4\n";
 
+    //Audio filename
+    QUrl tempAF = currentMovie->getAudioFile();
+    if(tempAF.isEmpty() == false)
+    {
+        QString tempAudioFile = tempAF.toEncoded();
+        out << tempAudioFile << "\n";
+    }
+    else
+    {
+        out << "NoAudioFile\n";
+    }
+
     //Current Color
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
@@ -203,9 +206,7 @@ void MainWindow::on_actionSave_As_triggered()
           out << tempRed << " " << tempGreen << " " << tempBlue << " ";
        }
     }
-    out << "0 0 0 0 0 0\n";
-    out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
-           "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << "\n";
 
     //Frame Count and size
     out << currentMovie->getFrameCount() << " 10 4\n";
@@ -262,6 +263,18 @@ void MainWindow::on_actionSave_triggered()
     //Version Number
     out << "0.4\n";
 
+    //Audio filename
+    QUrl tempAF = currentMovie->getAudioFile();
+    if(tempAF.isEmpty() == false)
+    {
+        QString tempAudioFile = tempAF.toEncoded();
+        out << tempAudioFile << "\n";
+    }
+    else
+    {
+        out << "NoAudioFile\n";
+    }
+
     //Current Color
     out << red->value() << " " << green->value() << " " << blue->value()
         << " 0 0 0 0 0 0\n";
@@ -279,9 +292,7 @@ void MainWindow::on_actionSave_triggered()
           out << tempRed << " " << tempGreen << " " << tempBlue << " ";
        }
     }
-    out << "0 0 0 0 0 0\n";
-    out << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
-           "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+    out << "\n";
 
     //Frame Count and size
     out << currentMovie->getFrameCount() << " 10 4\n";
