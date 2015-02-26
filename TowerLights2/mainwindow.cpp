@@ -404,7 +404,7 @@ void MainWindow::saveCurrentFrame()
         for(int j = 0; j < FULLGRIDWIDTH; j++)
         {
             tempC = fullTower[i][j]->property("color").value<QColor>();
-            temp->setFullGridPixel(i, j, tempC);
+            temp->setFullGridPixelColor(i, j, tempC);
         }
     }
 }
@@ -430,24 +430,45 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_newFrameButton_clicked()
 {
-    if(QApplication::keyboardModifiers() == Qt::ShiftModifier){
-        int frameNumber = currentMovie->getFrameNumber();
+    saveCurrentFrame();
+    int frameNumber = currentMovie->getFrameNumber();
+
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
         currentMovie->insertFrame(frameNumber+1, new Frame());
-        qint64 newTime;
-
-        QTime time = ui->intervalTime->time();
-
-        newTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
-
-        newTime += currentMovie->getCurrentFrame()->getTimeStamp();
-
-        currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
-        ui->previewScrollBar->setRange(0,currentMovie->getFrameCount());
-        ui->previewScrollBar->setValue(frameNumber+1);
-        updateUI();
-    } else {
-
     }
+    else
+    {
+        Frame *newFrame = new Frame();
+        Frame *oldFrame = currentMovie->getFrame(frameNumber);
+        for(int i = 0; i < FULLGRIDHEIGHT; i++)
+        {
+            for(int j = 0; j < FULLGRIDWIDTH; j++)
+            {
+                newFrame->setFullGridPixelColor(i,j,oldFrame->FullGridPixel(i,j)->getColor());
+
+                //std::cout << newFrame->FullGridPixel(i,j)->getColor().value() << " ";
+            }
+            //std::cout << std::endl;
+        }
+        currentMovie->insertFrame(frameNumber+1, newFrame);
+    }
+
+    qint64 newTime;
+
+    QTime time = ui->intervalTime->time();
+
+    newTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
+
+    newTime += currentMovie->getCurrentFrame()->getTimeStamp();
+
+    currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
+    ui->previewScrollBar->setRange(0,currentMovie->getFrameCount());
+    ui->previewScrollBar->setValue(frameNumber+1);
+
+
+
+    updateUI();
 }
 
 void MainWindow::on_previewScrollBar_valueChanged(int value)
@@ -618,7 +639,7 @@ void MainWindow::changeCurrentFrame(int value)
         for(int j = 0; j < FULLGRIDWIDTH; j++)
         {
             tempC = fullTower[i][j]->property("color").value<QColor>();
-            tempFrame->setFullGridPixel(i, j, tempC);
+            tempFrame->setFullGridPixelColor(i, j, tempC);
         }
     }
 
@@ -635,6 +656,20 @@ void MainWindow::changeCurrentFrame(int value)
     }
 
     updateUI();
+}
+
+void MainWindow::updateMainTower()
+{
+    //Update Main Grid
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            fullTower[i][j]->setProperty("color",
+                                         currentMovie->getCurrentFrame()->
+                                         FullGridPixel(i,j)->getColor());
+        }
+    }
 }
 
 void MainWindow::on_actionAfter_triggered()
@@ -695,4 +730,28 @@ void MainWindow::on_playPauseButton_clicked()
 void MainWindow::on_stopButton_clicked()
 {
     stop = true;
+}
+
+void MainWindow::on_upButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(1,0);
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_randomButton_clicked()
+{
+    QColor tempColor;
+    srand(time(NULL));
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            tempColor.setRgb(rand()%255, rand()%255, rand()%255);
+            fullTower[i][j]->setProperty("color", tempColor);
+        }
+    }
+    saveCurrentFrame();
+    updateUI();
 }
