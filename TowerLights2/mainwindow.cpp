@@ -737,7 +737,7 @@ void MainWindow::on_upButton_clicked()
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(1,0);
     updateMainTower();
-    updateUI();
+   // updateUI();
 }
 
 void MainWindow::on_randomButton_clicked()
