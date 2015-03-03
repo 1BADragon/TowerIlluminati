@@ -52,7 +52,7 @@ Pixel *Frame::TowerGridPixel(int x, int y)
     return towerGrid[x][y];
 }
 
-void Frame::applyVector(int y, int x)
+void Frame::applyVector(int x, int y)
 {
     Frame tempFrame;
     for(int i = 0; i < FULLGRIDHEIGHT; i++)
@@ -66,20 +66,20 @@ void Frame::applyVector(int y, int x)
     {
         for(int j = 0; j < FULLGRIDWIDTH; j++)
         {
-            if((i - y) > 0 && (i - y) < FULLGRIDHEIGHT)
+            if(i + y < FULLGRIDHEIGHT && i + y >= 0)
             {
-                if((j - x) > 0 && (j - x) < FULLGRIDWIDTH)
+                if(j + x < FULLGRIDWIDTH && j + x >= 0)
                 {
-                    this->setFullGridPixelColor(i+y,j+x,tempFrame.FullGridPixel(i,j)->getColor());
+                    this->setFullGridPixelColor(i,j, tempFrame.FullGridPixel(i+y,j+x)->getColor());
                 }
                 else
                 {
-                    this->setFullGridPixelColor(i+y,j+x,"grey");
+                    this->setFullGridPixelColor(i,j,"grey");
                 }
             }
             else
             {
-                this->setFullGridPixelColor(i+y,j+x,"grey");
+                this->setFullGridPixelColor(i,j,"grey");
             }
         }
     }

@@ -94,7 +94,7 @@ void MainWindow::on_actionOpen_triggered()
     delete currentMovie;
     currentMovie = new Movie();
     QString fileName = QFileDialog::getOpenFileName(this,
-         tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
+                                                    tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
 
     //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
 
@@ -106,113 +106,113 @@ void MainWindow::on_actionOpen_triggered()
     QFile inputFile(fileName);
     if (inputFile.open(QIODevice::ReadOnly))
     {
-       QTextStream in(&inputFile);
-       while (!in.atEnd())
-       {
-          skip = 0;
-          QString line = in.readLine();
-          QRegExp rx("[ ]");
-          QStringList list = line.split(rx, QString::SkipEmptyParts);
-          //qDebug() << list;
-          QList <int> nums;
-          for(int i = 0; i < list.size(); i++)
-          {
-              nums.append(list.at(i).toInt());
-          }
+        QTextStream in(&inputFile);
+        while (!in.atEnd())
+        {
+            skip = 0;
+            QString line = in.readLine();
+            QRegExp rx("[ ]");
+            QStringList list = line.split(rx, QString::SkipEmptyParts);
+            //qDebug() << list;
+            QList <int> nums;
+            for(int i = 0; i < list.size(); i++)
+            {
+                nums.append(list.at(i).toInt());
+            }
 
-          //Get audio filename
-          if(count == 2 && line != "NoAudioFile")
-          {
-              //QUrl tempVal = line.t
-              currentMovie->setAudio(line);
-          }
-          //get current color rgb values
-          if(count == 3)
-          {
-              red -> setValue(0);
-              green -> setValue(0);
-              blue -> setValue(0);
-              red -> setValue(nums.at(0));
-              green -> setValue(nums.at(1));
-              blue -> setValue(nums.at(2));
-          }
+            //Get audio filename
+            if(count == 2 && line != "NoAudioFile")
+            {
+                //QUrl tempVal = line.t
+                currentMovie->setAudio(line);
+            }
+            //get current color rgb values
+            if(count == 3)
+            {
+                red -> setValue(0);
+                green -> setValue(0);
+                blue -> setValue(0);
+                red -> setValue(nums.at(0));
+                green -> setValue(nums.at(1));
+                blue -> setValue(nums.at(2));
+            }
 
-          //Color Pallet RGB values
-          if(count == 4)
-          {
-              //QList<QQuickItem *> colorP[16];
-              int counter = 0;
-              //int counter2 = 0;
-              for(int i = 0; i < 2; i++)
-              {
-                  for(int j = 0; j < 8; j++)
-                  {
-                      QColor tempColor;
-                      tempColor.setRed(nums.at(counter));
-                      counter++;
-                      tempColor.setGreen(nums.at(counter));
-                      counter++;
-                      tempColor.setBlue(nums.at(counter));
-                      counter++;
-                      colorPallet[i][j]->setProperty("color", tempColor);
-                  }
-              }
-          }
+            //Color Pallet RGB values
+            if(count == 4)
+            {
+                //QList<QQuickItem *> colorP[16];
+                int counter = 0;
+                //int counter2 = 0;
+                for(int i = 0; i < 2; i++)
+                {
+                    for(int j = 0; j < 8; j++)
+                    {
+                        QColor tempColor;
+                        tempColor.setRed(nums.at(counter));
+                        counter++;
+                        tempColor.setGreen(nums.at(counter));
+                        counter++;
+                        tempColor.setBlue(nums.at(counter));
+                        counter++;
+                        colorPallet[i][j]->setProperty("color", tempColor);
+                    }
+                }
+            }
 
-          //Frame count
-          if(count == 5)
-          {
-              /*Ignore for now since there is no frame count variable
+            //Frame count
+            if(count == 5)
+            {
+                /*Ignore for now since there is no frame count variable
                * ...we are currently just using frameSequence -> length();
               */
-          }
+            }
 
-          //Add timestamp to frames
-          if(count == tracker )
-          {
-              //std::cout << "Tracker: " << tracker << std::endl;
-              currentMovie->newFrame();
-              qDebug() << currentMovie->getFrameCount();
-              currentMovie->getFrame(frameCount)->setTimeStamp(list.at(0).toInt());
-              tracker = tracker + 21;
-              frameCount++;
-              gridLine = 0;
-              skip = 1;
-          }
+            //Add timestamp to frames
+            if(count == tracker )
+            {
+                //std::cout << "Tracker: " << tracker << std::endl;
+                currentMovie->newFrame();
+                qDebug() << currentMovie->getFrameCount();
+                currentMovie->getFrame(frameCount)->setTimeStamp(list.at(0).toInt());
+                tracker = tracker + 21;
+                frameCount++;
+                gridLine = 0;
+                skip = 1;
+            }
 
-          //Add Color info to frames
-          if(count < tracker && count > 6 && skip == 0)
-          {
-              int counter = 0;
-              for(int i = 0; i < 12; i++)
-              {
-                  int tempRed = nums.at(counter);
-                  int tempGreen = nums.at(counter + 1);
-                  int tempBlue = nums.at(counter + 2);
-                  if(tempRed == 0 && tempGreen == 0 && tempBlue == 0)
-                  {
-                      tempRed = 128;
-                      tempGreen = 128;
-                      tempBlue = 128;
-                  }
-                  currentMovie->getFrame(frameCount - 1)->FullGridPixel(gridLine, i)
-                          ->setColor(tempRed,tempGreen,tempBlue);
-                  /*
+            //Add Color info to frames
+            if(count < tracker && count > 6 && skip == 0)
+            {
+                int counter = 0;
+                for(int i = 0; i < 12; i++)
+                {
+                    int tempRed = nums.at(counter);
+                    int tempGreen = nums.at(counter + 1);
+                    int tempBlue = nums.at(counter + 2);
+                    if(tempRed == 0 && tempGreen == 0 && tempBlue == 0)
+                    {
+                        tempRed = 128;
+                        tempGreen = 128;
+                        tempBlue = 128;
+                    }
+                    currentMovie->getFrame(frameCount - 1)->FullGridPixel(gridLine, i)
+                            ->setColor(tempRed,tempGreen,tempBlue);
+                    /*
                   if(gridLine > 4 && gridLine < 15 && i > 3 && i < 8)
                   {
                       currentMovie->getFrame(frameCount - 1)->TowerGridPixel(gridLine-5, i-4)
                               ->setColor(tempRed,tempGreen,tempBlue);
                   }
                   */
-                  counter = counter + 3;
-              }
-              gridLine++;
-          }
+                    counter = counter + 3;
+                }
+                gridLine++;
+            }
 
-          //std::cout << line.toStdString() << std::endl;
-          count++;
-       }
-       inputFile.close();
+            //std::cout << line.toStdString() << std::endl;
+            count++;
+        }
+        inputFile.close();
     }
     //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
     updateMainTower();
@@ -865,14 +865,6 @@ void MainWindow::on_stopButton_clicked()
     stop = true;
 }
 
-void MainWindow::on_upButton_clicked()
-{
-    saveCurrentFrame();
-    currentMovie->getCurrentFrame()->applyVector(1,0);
-    updateMainTower();
-   // updateUI();
-}
-
 void MainWindow::on_randomButton_clicked()
 {
     QColor tempColor;
@@ -886,5 +878,76 @@ void MainWindow::on_randomButton_clicked()
         }
     }
     saveCurrentFrame();
+    updateUI();
+}
+
+void MainWindow::on_upButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(0,1);
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_downButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(0,-1);
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_leftButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(1,0);
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_rightButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(-1,0);
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_downLeftButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(1,-1);
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_upLeftButton_clicked()
+{
+
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(1,1);
+    updateMainTower();
+    updateUI();
+
+}
+
+
+void MainWindow::on_upRightButton_clicked()
+{
+
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(-1,1);
+    updateMainTower();
+    updateUI();
+
+}
+
+
+void MainWindow::on_downRightButton_clicked()
+{
+
+    saveCurrentFrame();
+    currentMovie->getCurrentFrame()->applyVector(-1,-1);
+    updateMainTower();
     updateUI();
 }
