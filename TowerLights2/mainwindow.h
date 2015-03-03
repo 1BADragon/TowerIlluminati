@@ -83,6 +83,7 @@ private:
     bool stop;
 
     Movie *currentMovie;
+    QMediaPlayer *audio;
 
     Timer timer;
 

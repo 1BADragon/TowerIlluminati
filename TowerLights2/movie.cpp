@@ -3,7 +3,6 @@
 Movie::Movie()
 {
   frameSequence = new QList <Frame*>;
-  audio = new QMediaPlayer;
   currentIndex = 0;
   currentFrameNumber = 0;
 }

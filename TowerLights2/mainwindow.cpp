@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //Setup media.
   currentMovie = new Movie();
+  audio = new QMediaPlayer;
 
   //Attach Widgets to the UI
   cWheel = new ColorWheel(ui->colorWheelWidget);
@@ -399,15 +400,14 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
 {
   currentMovie->setAudio(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
                                                                           tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)"))));
-  currentMovie->audio->setMedia(currentMovie->getAudioFile());
-  currentMovie->audio->stop();
-  ui->mediaSlider->setRange(0,currentMovie->audio->duration()/1000);
+  audio->setMedia(currentMovie->getAudioFile());
+  audio->stop();
+  ui->mediaSlider->setRange(0,audio->duration());
 
 }
 
 void MainWindow::on_actionOpen_triggered()
 {
-  QFileDialog openFileDialog(this);
   currentMovie->setFile(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
                                                                          tr("Open File"), "/", tr("Tower Light Files (*.tan, *.tan2)"))));
 
@@ -425,6 +425,7 @@ void MainWindow::on_newFrameButton_clicked()
   newTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
 
   newTime += currentMovie->getCurrentFrame()->getTimeStamp();
+  audio->setPosition(newTime);
 
   currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
   ui->previewScrollBar->setRange(0,currentMovie->getFrameCount());
@@ -527,6 +528,7 @@ void MainWindow::updateUI()
 
   tempTime.setHMS(hours, minutes, seconds, milliseconds);
   ui->currentTime->setTime(tempTime);
+  audio->setPosition(msecs);
 }
 
 void MainWindow::setUpMats()
@@ -628,6 +630,7 @@ void MainWindow::on_currentTime_timeChanged(const QTime &time)
 {
   qint64 tempTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
   currentMovie->getCurrentFrame()->setTimeStamp(tempTime);
+  audio->setPosition(tempTime);
 }
 
 void MainWindow::on_playPauseButton_clicked()
@@ -639,6 +642,9 @@ void MainWindow::on_playPauseButton_clicked()
     Frame* currentFrame = currentMovie->getCurrentFrame();
     Frame* nextFrame = currentMovie->getNextFrame();
     timer.start(currentFrame->getTimeStamp());
+    audio->setPosition(currentFrame->getTimeStamp());
+    audio->play();
+    qint64 time;
 
     while(stop == false){
         if(currentFrameNumber < maxFrames){
@@ -648,7 +654,13 @@ void MainWindow::on_playPauseButton_clicked()
             //qDebug() << "currentFrameNumber: " << currentFrameNumber;
             //qDebug() << "maxFrames: " << maxFrames;
             //qDebug() << "";
-            if(nextFrame->getTimeStamp() <= timer.getTime())
+            if (true){ //this is flag for whether a music file is loaded or not
+                time = timer.getTime();
+            }
+            else{
+                time = audio->position();
+            }
+            if(nextFrame->getTimeStamp() <= time)
             {
                 changeCurrentFrame(currentFrameNumber);
                 currentFrame = nextFrame;
@@ -671,10 +683,13 @@ void MainWindow::on_playPauseButton_clicked()
         updateUI();
     }
     timer.stop();
+    //This may not be what we want. Is this if there are no more frames? So should music keep playing?
+    audio->stop();
     ui->previewScrollBar->setValue(currentFrameNumber);
 }
 
 void MainWindow::on_stopButton_clicked()
 {
     stop = true;
+    audio->stop();
 }
