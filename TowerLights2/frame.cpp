@@ -38,7 +38,7 @@ qint64 Frame::getTimeStamp(){
     return timeStamp;
 }
 
-void Frame::setFullGridPixel(int x, int y, QColor c){
+void Frame::setFullGridPixelColor(int x, int y, QColor c){
     fullGrid[x][y]->setColor(c);
 }
 
@@ -50,6 +50,39 @@ void Frame::setTowerGridPixel(int x, int y, QColor c)
 Pixel *Frame::TowerGridPixel(int x, int y)
 {
     return towerGrid[x][y];
+}
+
+void Frame::applyVector(int x, int y)
+{
+    Frame tempFrame;
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            tempFrame.setFullGridPixelColor(i,j,this->FullGridPixel(i,j)->getColor());
+        }
+    }
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            if(i + y < FULLGRIDHEIGHT && i + y >= 0)
+            {
+                if(j + x < FULLGRIDWIDTH && j + x >= 0)
+                {
+                    this->setFullGridPixelColor(i,j, tempFrame.FullGridPixel(i+y,j+x)->getColor());
+                }
+                else
+                {
+                    this->setFullGridPixelColor(i,j,"grey");
+                }
+            }
+            else
+            {
+                this->setFullGridPixelColor(i,j,"grey");
+            }
+        }
+    }
 }
 
 Pixel *Frame::FullGridPixel(int x, int y){

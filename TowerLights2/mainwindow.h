@@ -8,6 +8,7 @@
 #include "movie.h"
 #include "timer.h"
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <QtDeclarative/QDeclarativeView>
 #include <QQmlContext>
@@ -65,6 +66,24 @@ private slots:
 
     void on_stopButton_clicked();
 
+    void on_upButton_clicked();
+
+    void on_randomButton_clicked();
+
+    void on_downButton_clicked();
+
+    void on_leftButton_clicked();
+
+    void on_rightButton_clicked();
+
+    void on_downLeftButton_clicked();
+
+    void on_upLeftButton_clicked();
+
+    void on_upRightButton_clicked();
+
+    void on_downRightButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -92,6 +111,7 @@ private:
     void updateUI();
     void setUpMats();
     void changeCurrentFrame(int value);
+    void updateMainTower();
 
 };
 
