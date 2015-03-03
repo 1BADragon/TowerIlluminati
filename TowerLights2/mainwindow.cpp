@@ -93,7 +93,7 @@ void MainWindow::on_actionOpen_triggered()
 {
     delete currentMovie;
     currentMovie = new Movie();
-    QString fileName = QFileDialog::getOpenFileName(this,
+    fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
 
     //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
