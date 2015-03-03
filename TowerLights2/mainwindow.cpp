@@ -1,4 +1,3 @@
-#include <QFileDialog>
 #include "mainwindow.h"
 
 //Set Global Filename
@@ -94,7 +93,7 @@ void MainWindow::on_actionOpen_triggered()
     delete currentMovie;
     currentMovie = new Movie();
     fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
+                                            tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
 
     //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
 
@@ -881,6 +880,7 @@ void MainWindow::on_randomButton_clicked()
     updateUI();
 }
 
+//Arrow Buttons
 void MainWindow::on_upButton_clicked()
 {
     saveCurrentFrame();
