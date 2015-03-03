@@ -94,9 +94,7 @@ void MainWindow::on_actionOpen_triggered()
     delete currentMovie;
     currentMovie = new Movie();
     fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
-
-    //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
+                    tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
 
     int count = 1;
     int tracker = 6;
@@ -113,7 +111,6 @@ void MainWindow::on_actionOpen_triggered()
             QString line = in.readLine();
             QRegExp rx("[ ]");
             QStringList list = line.split(rx, QString::SkipEmptyParts);
-            //qDebug() << list;
             QList <int> nums;
             for(int i = 0; i < list.size(); i++)
             {
@@ -126,6 +123,7 @@ void MainWindow::on_actionOpen_triggered()
                 //QUrl tempVal = line.t
                 currentMovie->setAudio(line);
             }
+
             //get current color rgb values
             if(count == 3)
             {
@@ -140,9 +138,7 @@ void MainWindow::on_actionOpen_triggered()
             //Color Pallet RGB values
             if(count == 4)
             {
-                //QList<QQuickItem *> colorP[16];
                 int counter = 0;
-                //int counter2 = 0;
                 for(int i = 0; i < 2; i++)
                 {
                     for(int j = 0; j < 8; j++)
@@ -170,9 +166,7 @@ void MainWindow::on_actionOpen_triggered()
             //Add timestamp to frames
             if(count == tracker )
             {
-                //std::cout << "Tracker: " << tracker << std::endl;
                 currentMovie->newFrame();
-                qDebug() << currentMovie->getFrameCount();
                 currentMovie->getFrame(frameCount)->setTimeStamp(list.at(0).toInt());
                 tracker = tracker + 21;
                 frameCount++;
@@ -209,12 +203,10 @@ void MainWindow::on_actionOpen_triggered()
                 gridLine++;
             }
 
-            //std::cout << line.toStdString() << std::endl;
             count++;
         }
         inputFile.close();
     }
-    //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
     updateMainTower();
     updateUI();
 }
