@@ -17,6 +17,7 @@
 #include <QQuickItem>
 #include <QFileDialog>
 #include <QTime>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;

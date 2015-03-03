@@ -1,4 +1,3 @@
-#include <QFileDialog>
 #include "mainwindow.h"
 
 //Set Global Filename
@@ -96,6 +95,8 @@ void MainWindow::on_actionOpen_triggered()
     currentMovie = new Movie();
     fileName = QFileDialog::getOpenFileName(this,
                                             tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
+                  tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
+
 
     int count = 1;
     int tracker = 6;
@@ -894,6 +895,7 @@ void MainWindow::on_randomButton_clicked()
     updateUI();
 }
 
+//Arrow Buttons
 void MainWindow::on_upButton_clicked()
 {
     saveCurrentFrame();
