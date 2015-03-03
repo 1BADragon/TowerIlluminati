@@ -102,13 +102,14 @@ void MainWindow::on_actionOpen_triggered()
     int tracker = 6;
     int frameCount = 0;
     int gridLine = 0;
+    int skip = 0;
     QFile inputFile(fileName);
     if (inputFile.open(QIODevice::ReadOnly))
     {
        QTextStream in(&inputFile);
        while (!in.atEnd())
        {
-          int skip = 0;
+          skip = 0;
           QString line = in.readLine();
           QRegExp rx("[ ]");
           QStringList list = line.split(rx, QString::SkipEmptyParts);
@@ -153,15 +154,9 @@ void MainWindow::on_actionOpen_triggered()
                       counter++;
                       tempColor.setBlue(nums.at(counter));
                       counter++;
-                      QVariant temp = tempColor;
-
-                      //colorP[counter2++] = temp;
-                      //colorPallet[i][j]->property("color") = NULL;
                       colorPallet[i][j]->setProperty("color", tempColor);
                   }
               }
-              //ui->colorPalletWidget->rootObject()->
-              //            childItems()[0]->childItems() = colorP;
           }
 
           //Frame count
@@ -220,6 +215,7 @@ void MainWindow::on_actionOpen_triggered()
        inputFile.close();
     }
     //std::cout << "FrameCount: " << currentMovie->getFrameCount() << std::endl;
+    updateMainTower();
     updateUI();
 }
 
