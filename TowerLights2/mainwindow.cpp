@@ -94,9 +94,12 @@ void MainWindow::on_actionOpen_triggered()
     delete currentMovie;
     currentMovie = new Movie();
     fileName = QFileDialog::getOpenFileName(this,
+<<<<<<< HEAD
                                             tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
+=======
                   tr("Open File"), "/home/", tr("Tan Files (*.tan2)"));
 
+>>>>>>> 22bc4f4501f6264e070bb4f4f6676625e6ed8d24
 
     int count = 1;
     int tracker = 6;
