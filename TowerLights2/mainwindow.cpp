@@ -964,3 +964,22 @@ void MainWindow::on_downRightButton_clicked()
     updateMainTower();
     updateUI();
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Up:
+        on_upButton_clicked();
+        break;
+    case Qt::Key_Down:
+        on_downButton_clicked();
+        break;
+    case Qt::Key_Right:
+        on_rightButton_clicked();
+        break;
+    case Qt::Key_Left:
+        on_leftButton_clicked();
+        break;
+    }
+}

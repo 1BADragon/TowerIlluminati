@@ -85,6 +85,8 @@ private slots:
 
     void on_downRightButton_clicked();
 
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     Ui::MainWindow *ui;
 
