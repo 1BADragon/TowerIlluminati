@@ -867,7 +867,7 @@ void MainWindow::on_playPauseButton_clicked()
     }
     timer.stop();
     //This may not be what we want. Is this if there are no more frames? So should music keep playing?
-    audio->stop();
+  //  audio->stop();
     ui->previewScrollBar->setValue(currentFrameNumber);
 }
 
