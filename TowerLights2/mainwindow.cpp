@@ -613,7 +613,6 @@ void MainWindow::updateUI()
                 }
             }
         }
-        qApp->processEvents();
     }
 
     //Upcoming Frames
@@ -662,6 +661,8 @@ void MainWindow::updateUI()
     tempTime.setHMS(hours, minutes, seconds, milliseconds);
     ui->currentTime->setTime(tempTime);
     audio->setPosition(msecs);
+
+    qApp->processEvents();
 }
 
 void MainWindow::setUpMats()
@@ -795,6 +796,10 @@ void MainWindow::on_playPauseButton_clicked()
     qDebug() << audio->duration();
     qint64 time;
 
+    if (nextFrame == NULL)
+    {
+        stop = true;
+    }
     while(stop == false){
         if(currentFrameNumber < maxFrames){
             //qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
