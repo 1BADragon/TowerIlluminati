@@ -87,6 +87,8 @@ private slots:
 
     void keyPressEvent(QKeyEvent *event);
 
+    void on_actionPreview_Mode_triggered();
+
 private:
     Ui::MainWindow *ui;
 

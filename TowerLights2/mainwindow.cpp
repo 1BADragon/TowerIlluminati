@@ -558,49 +558,7 @@ void MainWindow::on_actionOpen_triggered()
 }
 */
 
-void MainWindow::on_newFrameButton_clicked()
-{
-    saveCurrentFrame();
-    int frameNumber = currentMovie->getFrameNumber();
 
-    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
-    {
-        currentMovie->insertFrame(frameNumber+1, new Frame());
-    }
-    else
-    {
-        Frame *newFrame = new Frame();
-        Frame *oldFrame = currentMovie->getFrame(frameNumber);
-        for(int i = 0; i < FULLGRIDHEIGHT; i++)
-        {
-            for(int j = 0; j < FULLGRIDWIDTH; j++)
-            {
-                newFrame->setFullGridPixelColor(i,j,oldFrame->FullGridPixel(i,j)->getColor());
-
-                //std::cout << newFrame->FullGridPixel(i,j)->getColor().value() << " ";
-            }
-            //std::cout << std::endl;
-        }
-        currentMovie->insertFrame(frameNumber+1, newFrame);
-    }
-
-    qint64 newTime;
-
-    QTime time = ui->intervalTime->time();
-
-    newTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
-
-    newTime += currentMovie->getCurrentFrame()->getTimeStamp();
-    audio->setPosition(newTime);
-
-    currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
-    ui->previewScrollBar->setRange(0,currentMovie->getFrameCount());
-    ui->previewScrollBar->setValue(frameNumber+1);
-
-
-
-    updateUI();
-}
 
 void MainWindow::on_previewScrollBar_valueChanged(int value)
 {
@@ -893,9 +851,60 @@ void MainWindow::on_randomButton_clicked()
     updateUI();
 }
 
+void MainWindow::on_newFrameButton_clicked()
+{
+    saveCurrentFrame();
+    int frameNumber = currentMovie->getFrameNumber();
+
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+        currentMovie->insertFrame(frameNumber+1, new Frame());
+    }
+    else
+    {
+        Frame *newFrame = new Frame();
+        Frame *oldFrame = currentMovie->getFrame(frameNumber);
+        for(int i = 0; i < FULLGRIDHEIGHT; i++)
+        {
+            for(int j = 0; j < FULLGRIDWIDTH; j++)
+            {
+                newFrame->setFullGridPixelColor(i,j,oldFrame->FullGridPixel(i,j)->getColor());
+
+                //std::cout << newFrame->FullGridPixel(i,j)->getColor().value() << " ";
+            }
+            //std::cout << std::endl;
+        }
+        currentMovie->insertFrame(frameNumber+1, newFrame);
+    }
+
+    qint64 newTime;
+
+    QTime time = ui->intervalTime->time();
+
+    newTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
+
+    newTime += currentMovie->getCurrentFrame()->getTimeStamp();
+    audio->setPosition(newTime);
+
+    currentMovie->getFrame(frameNumber+1)->setTimeStamp(newTime);
+    ui->previewScrollBar->setRange(0,currentMovie->getFrameCount());
+    ui->previewScrollBar->setValue(frameNumber+1);
+
+
+
+    updateUI();
+}
+
 //Arrow Buttons
 void MainWindow::on_upButton_clicked()
 {
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(0,1);
     updateMainTower();
@@ -904,6 +913,13 @@ void MainWindow::on_upButton_clicked()
 
 void MainWindow::on_downButton_clicked()
 {
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(0,-1);
     updateMainTower();
@@ -912,6 +928,13 @@ void MainWindow::on_downButton_clicked()
 
 void MainWindow::on_leftButton_clicked()
 {
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(1,0);
     updateMainTower();
@@ -920,6 +943,13 @@ void MainWindow::on_leftButton_clicked()
 
 void MainWindow::on_rightButton_clicked()
 {
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(-1,0);
     updateMainTower();
@@ -928,6 +958,13 @@ void MainWindow::on_rightButton_clicked()
 
 void MainWindow::on_downLeftButton_clicked()
 {
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(1,-1);
     updateMainTower();
@@ -936,7 +973,13 @@ void MainWindow::on_downLeftButton_clicked()
 
 void MainWindow::on_upLeftButton_clicked()
 {
-
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(1,1);
     updateMainTower();
@@ -947,7 +990,13 @@ void MainWindow::on_upLeftButton_clicked()
 
 void MainWindow::on_upRightButton_clicked()
 {
-
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(-1,1);
     updateMainTower();
@@ -958,7 +1007,13 @@ void MainWindow::on_upRightButton_clicked()
 
 void MainWindow::on_downRightButton_clicked()
 {
-
+    if(QApplication::keyboardModifiers() == Qt::ShiftModifier)
+    {
+    }
+    else
+    {
+        on_newFrameButton_clicked();
+    }
     saveCurrentFrame();
     currentMovie->getCurrentFrame()->applyVector(-1,-1);
     updateMainTower();
@@ -982,4 +1037,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         on_leftButton_clicked();
         break;
     }
+}
+
+void MainWindow::on_actionPreview_Mode_triggered()
+{
+
 }
