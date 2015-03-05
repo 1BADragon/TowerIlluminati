@@ -544,8 +544,8 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
                                                                             tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)"))));
     audio->setMedia(currentMovie->getAudioFile());
     audio->stop();
-    ui->mediaSlider->setRange(0,audio->duration());
-
+    ui->mediaSlider->setRange(0,audio->duration()/1000);
+    qDebug() << audio->duration();
 }
 
 /*
@@ -791,6 +791,8 @@ void MainWindow::on_playPauseButton_clicked()
     timer.start(currentFrame->getTimeStamp());
     audio->setPosition(currentFrame->getTimeStamp());
     audio->play();
+    ui->mediaSlider->setRange(0,audio->duration()/1000);
+    qDebug() << audio->duration();
     qint64 time;
 
     while(stop == false){
@@ -811,6 +813,7 @@ void MainWindow::on_playPauseButton_clicked()
             {
                 changeCurrentFrame(currentFrameNumber);
                 currentFrame = nextFrame;
+                ui->mediaSlider->setSliderPosition(time/1000);
 
                 if((currentFrameNumber + 1) < maxFrames)
                 {
