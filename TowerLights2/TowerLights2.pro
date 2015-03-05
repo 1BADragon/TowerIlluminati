@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     colorwheel.cpp \
     color.cpp \
     colorpalette.cpp \
-    timer.cpp
+    timer.cpp \
+    previewer.cpp
 
 HEADERS  += mainwindow.h \
     grid.h \
@@ -37,9 +38,11 @@ HEADERS  += mainwindow.h \
     colorwheel.h \
     color.h \
     colorpalette.h \
-    timer.h
+    timer.h \
+    previewer.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    previewer.ui
 
 OTHER_FILES +=
 

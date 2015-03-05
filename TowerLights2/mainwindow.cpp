@@ -68,13 +68,19 @@ MainWindow::MainWindow(QWidget *parent) :
     //create intial frame
     currentMovie->insertFrame(0, new Frame());
 
-    QTime tempTime(0,0,0,250);
+    QTime tempTime(0,0,0,50);
     ui->intervalTime->setMinimumTime(tempTime);
     setUpMats();
     updateUI();
 
     //set up some button filters so they can capture shift presses
     ui->newFrameButton->installEventFilter(this);
+
+    //set up previewer window
+    previewer.hide();
+
+    //connect the exit symbol to a function to properly exit the app
+
 }
 
 MainWindow::~MainWindow()
@@ -85,7 +91,7 @@ MainWindow::~MainWindow()
 //this function is called when file>>exit is selected
 void MainWindow::on_actionExit_triggered()
 {
-    exit(0);
+    QApplication::quit();
 }
 
 //this function is called when file>>open is selected
@@ -1041,5 +1047,5 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::on_actionPreview_Mode_triggered()
 {
-
+    previewer.show();
 }

@@ -7,6 +7,7 @@
 #include "colorpalette.h"
 #include "movie.h"
 #include "timer.h"
+#include "previewer.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -91,6 +92,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    Previewer previewer;
 
     ColorWheel *cWheel;
 
