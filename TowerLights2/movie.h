@@ -26,6 +26,8 @@ public:
   void setFrameNumber(int x);
   int getFrameNumber(int x);
   Frame* getCurrentFrame();
+  void sortFrames();
+  void printTimeStamps();
 
 
 private:
@@ -40,5 +42,7 @@ private:
 
   void loadFile();
 };
+
+int compareFrames(const void* a, const void* b);
 
 #endif // MOVIE_H

@@ -86,5 +86,26 @@ void Movie::setFrameNumber(int x)
 
 Frame *Movie::getCurrentFrame()
 {
-  return (*frameSequence)[currentFrameNumber];
+    return (*frameSequence)[currentFrameNumber];
+}
+
+void Movie::sortFrames()
+{
+    qSort(frameSequence->begin(), frameSequence->end(), compareFrames);
+}
+
+void Movie::printTimeStamps()
+{
+    for(int i = 0; i < frameSequence->length(); i++)
+    {
+        qDebug() << frameSequence->at(i)->getTimeStamp();
+    }
+}
+
+
+int compareFrames(const void *a, const void *b)
+{
+    qint64 aTime = ((Frame*)(a))->getTimeStamp();
+    qint64 bTime = ((Frame*)(b))->getTimeStamp();
+    return aTime < bTime;
 }

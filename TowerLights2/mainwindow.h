@@ -90,6 +90,8 @@ private slots:
 
     void on_actionPreview_Mode_triggered();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 

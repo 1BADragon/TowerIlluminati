@@ -778,7 +778,6 @@ void MainWindow::on_currentTime_timeChanged(const QTime &time)
 {
     qint64 tempTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
     currentMovie->getCurrentFrame()->setTimeStamp(tempTime);
-    audio->setPosition(tempTime);
 }
 
 void MainWindow::on_playPauseButton_clicked()
@@ -1056,4 +1055,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::on_actionPreview_Mode_triggered()
 {
     previewer.show();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    currentMovie->sortFrames();
+    updateUI();
 }
