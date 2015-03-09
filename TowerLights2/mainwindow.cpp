@@ -548,24 +548,6 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
     qDebug() << audio->duration();
 }
 
-/*
-void MainWindow::on_actionOpen_triggered()
-{
-<<<<<<< HEAD
-  currentMovie->setFile(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
-                                                                         tr("Open File"), "/", tr("Tower Light Files (*.tan, *.tan2)"))));
-=======
-    QFileDialog openFileDialog(this);
-    currentMovie->setFile(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
-                                                                           tr("Open File"), "/", tr("Tower Light Files (*.tan, *.tan2)"))));
->>>>>>> origin/master
-
-    ui->previewScrollBar->setRange(0, currentMovie->getFrameCount());
-}
-*/
-
-
-
 void MainWindow::on_previewScrollBar_valueChanged(int value)
 {
     changeCurrentFrame(value);
@@ -660,7 +642,6 @@ void MainWindow::updateUI()
 
     tempTime.setHMS(hours, minutes, seconds, milliseconds);
     ui->currentTime->setTime(tempTime);
-    audio->setPosition(msecs);
 
     qApp->processEvents();
 }
