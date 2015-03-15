@@ -923,6 +923,7 @@ void MainWindow::on_stopButton_clicked()
 {
     stop = true;
     audio->stop();
+    ui->previewScrollBar->setValue(0);
 }
 
 void MainWindow::on_randomButton_clicked()
