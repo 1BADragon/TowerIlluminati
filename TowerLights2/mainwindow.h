@@ -51,6 +51,8 @@ private slots:
 
     void towerPainting();
 
+    void towerReleased();
+
     void on_actionOpen_Audio_File_triggered();
 
     void on_actionOpen_triggered();
@@ -110,6 +112,7 @@ private:
 
     bool ping;
     bool stop;
+    bool towerClicked;
 
     Movie *currentMovie;
     QMediaPlayer *audio;
@@ -122,6 +125,7 @@ private:
     void setUpMats();
     void changeCurrentFrame(int value);
     void updateMainTower();
+    void upDatePreviewer();
 
 };
 

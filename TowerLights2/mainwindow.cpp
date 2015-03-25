@@ -54,8 +54,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QQuickItem *towerGrid = ui->TowerGridWidget->rootObject();
     if(towerGrid != NULL)
+    {
         connect(towerGrid, SIGNAL(towerClicked()),
                 this, SLOT(towerPainting()));
+        connect(towerGrid, SIGNAL(towerReleased()),
+                this, SLOT(towerReleased()));
+    }
+    else
+    {
+        qFatal("towerGrid was NULL");
+    }
+
+    towerClicked = false;
 
     //set some inital values for variables...
     //this is a constructor after all
@@ -600,9 +610,33 @@ void MainWindow::updateColorSpinBoxes(QColor newColor){
     }
 }
 
+//Trying to get tower painting working
 void MainWindow::towerPainting()
 {
     updateUI();
+    towerClicked = true;
+    int count = 0;
+    while(towerClicked)
+    {
+        qDebug() << "pressed " << count++;
+        qApp->processEvents();
+        for(int i = 0; i < FULLGRIDHEIGHT; i++)
+        {
+            for(int j = 0; j < FULLGRIDWIDTH; j++)
+            {
+                if(fullTower[i][j]->contains(fullTower[i][j]->mapToScene(QCursor::pos())))
+                {
+                    fullTower[i][j]->setProperty("color", cWheel->colorToString());
+                }
+            }
+        }
+    }
+    qDebug() << "released";
+}
+
+void MainWindow::towerReleased()
+{
+    towerClicked = false;
 }
 
 //this function sets the background color of the widgest
@@ -647,6 +681,19 @@ void MainWindow::on_actionOpen_Audio_File_triggered()
 void MainWindow::on_previewScrollBar_valueChanged(int value)
 {
     changeCurrentFrame(value);
+}
+
+void MainWindow::upDatePreviewer()
+{
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 4; j++)
+        {
+            previewTowers[3][i][j]->setProperty("color",
+                                                mainTower[i][j]->property("color"));
+        }
+    }
+    qApp->processEvents();
 }
 
 void MainWindow::updateUI()
@@ -915,7 +962,7 @@ void MainWindow::on_playPauseButton_clicked()
     }
     timer.stop();
     //This may not be what we want. Is this if there are no more frames? So should music keep playing?
-  //  audio->stop();
+    //  audio->stop();
     ui->previewScrollBar->setValue(currentFrameNumber);
 }
 
