@@ -7,7 +7,6 @@ Rectangle{
     height: 995
     color: "#00000000"
     signal towerClicked()
-    signal towerReleased()
     Grid {
         objectName: "towerGrid"
         rows: 20
@@ -21,23 +20,20 @@ Rectangle{
                 height: 25
                 color: "grey"
                 border.width: 1
-                border.color: "black"
+                border.color: "black"                
                 MouseArea {
                     preventStealing: false
                     hoverEnabled: true
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    /*
-                    onContainsMouseChanged:
+                    onClicked:
                     {
                         if (mouse.button == Qt.RightButton)
                             parent.color = "grey";
                         else if (mouse.button == Qt.LeftButton)
                             parent.color = currentColor.colorToString();
+                        towerClicked();
                     }
-                    */
-                    onPressed: towerClicked();
-                    onReleased: towerReleased();
                 }
             }
         }
