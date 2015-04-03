@@ -859,64 +859,69 @@ void MainWindow::on_currentTime_timeChanged(const QTime &time)
 
 void MainWindow::on_playPauseButton_clicked()
 {
-    saveCurrentFrame();
-    stop = false;
-    int currentFrameNumber = currentMovie->getFrameNumber();
-    int maxFrames = currentMovie->getFrameCount();
-    Frame* currentFrame = currentMovie->getCurrentFrame();
-    Frame* nextFrame = currentMovie->getNextFrame();
-    timer.start(currentFrame->getTimeStamp());
-    audio->setPosition(currentFrame->getTimeStamp());
-    audio->play();
-    ui->mediaSlider->setRange(0,audio->duration()/1000);
-    qDebug() << audio->duration();
-    qint64 time;
-
-    if (nextFrame == NULL)
-    {
+    if (stop==false){
         stop = true;
-    }
-    while(stop == false){
-        if(currentFrameNumber < maxFrames){
-            //qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
-            //qDebug() << "currentTime: " << timer.getTime();
-            //qDebug() << "currentFrame: " << currentFrame;
-            //qDebug() << "currentFrameNumber: " << currentFrameNumber;
-            //qDebug() << "maxFrames: " << maxFrames;
-            //qDebug() << "";
-            if (true){ //this is flag for whether a music file is loaded or not
-                time = timer.getTime();
-            }
-            else{
-                time = audio->position();
-            }
-            if(nextFrame->getTimeStamp() <= time)
-            {
-                changeCurrentFrame(currentFrameNumber);
-                currentFrame = nextFrame;
-                ui->mediaSlider->setSliderPosition(time/1000);
+        audio->pause();
+        updateUI();
+    }else{
+        saveCurrentFrame();
+        stop = false;
+        int currentFrameNumber = currentMovie->getFrameNumber();
+        int maxFrames = currentMovie->getFrameCount();
+        Frame* currentFrame = currentMovie->getCurrentFrame();
+        Frame* nextFrame = currentMovie->getNextFrame();
+        timer.start(currentFrame->getTimeStamp());
+        audio->setPosition(currentFrame->getTimeStamp());
+        audio->play();
+        ui->mediaSlider->setRange(0,audio->duration()/1000);
+        qDebug() << audio->duration();
+        qint64 time;
 
-                if((currentFrameNumber + 1) < maxFrames)
-                {
-                    currentMovie->setFrameNumber(currentFrameNumber);
-                    nextFrame = currentMovie->getFrame(currentFrameNumber+1);
-                    currentFrameNumber += 1;
-                }
-                else
-                {
-                    stop = true;
-                }
-            }
-        }
-        else{
+        if (nextFrame == NULL)
+        {
             stop = true;
         }
-        updateUI();
+        while(stop == false){
+            if(currentFrameNumber < maxFrames){
+                //qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
+                //qDebug() << "currentTime: " << timer.getTime();
+                //qDebug() << "currentFrame: " << currentFrame;
+                //qDebug() << "currentFrameNumber: " << currentFrameNumber;
+                //qDebug() << "maxFrames: " << maxFrames;
+                //qDebug() << "";
+                if (true){ //this is flag for whether a music file is loaded or not
+                    time = timer.getTime();
+                }
+                else{
+                    time = audio->position();
+                }
+                if(nextFrame->getTimeStamp() <= time)
+                {
+                    changeCurrentFrame(currentFrameNumber);
+                    currentFrame = nextFrame;
+                    ui->mediaSlider->setSliderPosition(time/1000);
+
+                    if((currentFrameNumber + 1) < maxFrames)
+                    {
+                        currentMovie->setFrameNumber(currentFrameNumber);
+                        nextFrame = currentMovie->getFrame(currentFrameNumber+1);
+                        currentFrameNumber += 1;
+                    }
+                    else
+                    {
+                        stop = true;
+                    }
+                }
+            }
+            else{
+                stop = true;
+            }
+            updateUI();
+        }
+        timer.stop();
+        audio->pause();
     }
-    timer.stop();
-    //This may not be what we want. Is this if there are no more frames? So should music keep playing?
-  //  audio->stop();
-    ui->previewScrollBar->setValue(currentFrameNumber);
+    ui->previewScrollBar->setValue(currentMovie->getFrameNumber());
 }
 
 void MainWindow::on_stopButton_clicked()
@@ -924,6 +929,7 @@ void MainWindow::on_stopButton_clicked()
     stop = true;
     audio->stop();
     ui->previewScrollBar->setValue(0);
+    ui->mediaSlider->setValue(0);
 }
 
 void MainWindow::on_randomButton_clicked()
