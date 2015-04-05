@@ -79,7 +79,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //set up previewer window
     previewer.hide();
 
-    //connect the exit symbol to a function to properly exit the app
+    //program has not been edited on first open
+    edited = false;
 
 }
 
@@ -91,7 +92,33 @@ MainWindow::~MainWindow()
 //this function is called when file>>exit is selected
 void MainWindow::on_actionExit_triggered()
 {
-    QApplication::quit();
+    if(edited)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("The document has been modified.");
+        msgBox.setInformativeText("Do you want to save your changes?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        int ret = msgBox.exec();
+        switch (ret) {
+          case QMessageBox::Save:
+              on_actionSave_triggered();
+              qApp->quit();
+              break;
+          case QMessageBox::Discard:
+              qApp->quit();
+              break;
+          case QMessageBox::Cancel:
+              break;
+          default:
+              // should never be reached
+              break;
+        }
+    }
+    else
+    {
+        qApp->quit();
+    }
 }
 
 //this function is called when file>>open is selected
@@ -602,6 +629,7 @@ void MainWindow::updateColorSpinBoxes(QColor newColor){
 
 void MainWindow::towerPainting()
 {
+    edited = true;
     updateUI();
 }
 
@@ -843,6 +871,38 @@ void MainWindow::updateMainTower()
                                          currentMovie->getCurrentFrame()->
                                          FullGridPixel(i,j)->getColor());
         }
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if(edited)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("The document has been modified.");
+        msgBox.setInformativeText("Do you want to save your changes?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        int ret = msgBox.exec();
+        switch (ret) {
+          case QMessageBox::Save:
+              on_actionSave_triggered();
+              qApp->quit();
+              break;
+          case QMessageBox::Discard:
+              qApp->quit();
+              break;
+          case QMessageBox::Cancel:
+              event->ignore();
+              break;
+          default:
+              // should never be reached
+              break;
+        }
+    }
+    else
+    {
+        qApp->quit();
     }
 }
 

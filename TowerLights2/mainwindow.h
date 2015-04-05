@@ -19,6 +19,7 @@
 #include <QFileDialog>
 #include <QTime>
 #include <QFileDialog>
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;
@@ -110,6 +111,7 @@ private:
 
     bool ping;
     bool stop;
+    bool edited;
 
     Movie *currentMovie;
     QMediaPlayer *audio;
@@ -122,6 +124,8 @@ private:
     void setUpMats();
     void changeCurrentFrame(int value);
     void updateMainTower();
+
+    void closeEvent (QCloseEvent *event);
 
 };
 
