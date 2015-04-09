@@ -18,6 +18,7 @@
 #include <QQuickItem>
 #include <QFileDialog>
 #include <QTime>
+#include <QTimer>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -95,6 +96,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_actionClose_triggered();
+
+    void saveWarning();
+
 private:
     Ui::MainWindow *ui;
 
@@ -119,13 +124,15 @@ private:
     QMediaPlayer *audio;
 
     Timer timer;
+    QTimer *saveTimer;
 
     void fixPalletBackground();
     void saveCurrentFrame();
     void updateUI();
     void setUpMats();
     void changeCurrentFrame(int value);
-    void updateMainTower();
+    void updateMainTower();\
+
 
     void closeEvent (QCloseEvent *event);
 

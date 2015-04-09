@@ -82,6 +82,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //program has not been edited on first open
     edited = false;
 
+    saveTimer = new QTimer();
+    connect(saveTimer, SIGNAL(timeout()), this, SLOT(saveWarning()));
+    saveTimer->setInterval(10000);
+    saveTimer->start();
 }
 
 MainWindow::~MainWindow()
@@ -124,36 +128,30 @@ void MainWindow::on_actionExit_triggered()
 //this function is called when file>>new is selected
 void MainWindow::on_actionNew_triggered()
 {
-    if(edited == true || fileName != NULL)
+    if(edited == true)
     {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Save Your Project?", "Do you want to "
                                              "save your current project?",
-                                      QMessageBox::Yes|QMessageBox::No);
-        if (reply == QMessageBox::Yes) {
-          if(fileName == NULL)
-          {
-            on_actionSave_As_triggered();
-          }
-          else
-          {
-            on_actionSave_triggered();
-          }
-          delete currentMovie;
-          currentMovie = new Movie();
-          updateUI();
-        }
-        else
+                                      QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+        switch(reply)
         {
-          delete currentMovie;
-          currentMovie = new Movie();
-          updateUI();
+        case QMessageBox::Yes:
+            on_actionSave_triggered();
+        case QMessageBox::No:
+            delete currentMovie;
+            currentMovie = new Movie();
+            currentMovie->newFrame();
+            updateMainTower();
+            updateUI();
+            edited = false;
+            break;
+        case QMessageBox::Cancel:
+            break;
+        default:
+            break;
         }
-    }
-    else
-    {
-        //Do nothing
-    }
+    }    
 }
 
 //this function is called when file>>open is selected
@@ -909,6 +907,15 @@ void MainWindow::updateMainTower()
     }
 }
 
+void MainWindow::saveWarning()
+{
+    QMessageBox msgBox;
+    msgBox.setText("You've been at it for a while would you like to save?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.exec();
+    saveTimer->start();
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     if(edited)
@@ -917,7 +924,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         msgBox.setText("The document has been modified.");
         msgBox.setInformativeText("Do you want to save your changes?");
         msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        msgBox.setDefaultButton(QMessageBox::Save);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
         int ret = msgBox.exec();
         switch (ret) {
           case QMessageBox::Save:
@@ -1240,4 +1247,9 @@ void MainWindow::on_pushButton_clicked()
 {
     currentMovie->sortFrames();
     updateUI();
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+    on_actionExit_triggered();
 }
