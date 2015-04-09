@@ -124,11 +124,36 @@ void MainWindow::on_actionExit_triggered()
 //this function is called when file>>new is selected
 void MainWindow::on_actionNew_triggered()
 {
-    //Check no current movie loaded
-
-    //if current movie ask if they want to save it
-
-    //else clear current movie
+    if(edited == true || fileName != NULL)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Save Your Project?", "Do you want to "
+                                             "save your current project?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+          if(fileName == NULL)
+          {
+            on_actionSave_As_triggered();
+          }
+          else
+          {
+            on_actionSave_triggered();
+          }
+          delete currentMovie;
+          currentMovie = new Movie();
+          updateUI();
+        }
+        else
+        {
+          delete currentMovie;
+          currentMovie = new Movie();
+          updateUI();
+        }
+    }
+    else
+    {
+        //Do nothing
+    }
 }
 
 //this function is called when file>>open is selected
