@@ -121,6 +121,16 @@ void MainWindow::on_actionExit_triggered()
     }
 }
 
+//this function is called when file>>new is selected
+void MainWindow::on_actionNew_triggered()
+{
+    //Check no current movie loaded
+
+    //if current movie ask if they want to save it
+
+    //else clear current movie
+}
+
 //this function is called when file>>open is selected
 void MainWindow::on_actionOpen_triggered()
 {

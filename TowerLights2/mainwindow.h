@@ -36,6 +36,8 @@ public:
 private slots:
     void on_actionExit_triggered();
 
+    void on_actionNew_triggered();
+
     void on_actionExport_triggered();
 
     void on_actionSave_As_triggered();
