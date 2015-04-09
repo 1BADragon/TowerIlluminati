@@ -188,12 +188,10 @@ void MainWindow::on_actionOpen_triggered()
                 if(line == "0.3")
                 {
                     version = 3;
-                    //std::cout<< "Version 3" <<std::endl;
                 }
                 if(line == "0.4")
                 {
                     version = 4;
-                    //std::cout<< "Version 4" <<std::endl;
                 }
             }
 
