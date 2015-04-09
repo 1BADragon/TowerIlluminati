@@ -202,8 +202,6 @@ void MainWindow::on_actionOpen_triggered()
             //Get audio filename
             if(count == 2 && line != "NoAudioFile" && version == 4)
             {
-                //QUrl tempVal = line.t
-                //currentMovie->setAudio(QUrl::QUrl(line));
                 currentMovie->setAudio(line);
             }
 
@@ -394,9 +392,8 @@ void MainWindow::on_actionExport_triggered()
     QUrl tempAF = currentMovie->getAudioFile();
     if(tempAF.isEmpty() == false)
     {
-        //One or the other need to test after audio file implemented
-        QString tempAudioFile = tempAF.toEncoded();
-        //QString tempAudioFile = tempAF.toString();
+        QFileInfo fileInf(tempAF.toLocalFile());
+        QString tempAudioFile = fileInf.fileName();
         out << tempAudioFile << "\n";
     }
     else
@@ -471,7 +468,8 @@ void MainWindow::on_actionSave_As_triggered()
     QUrl tempAF = currentMovie->getAudioFile();
     if(tempAF.isEmpty() == false)
     {
-        QString tempAudioFile = tempAF.toEncoded();
+        QFileInfo fileInf(tempAF.toLocalFile());
+        QString tempAudioFile = fileInf.fileName();
         out << tempAudioFile << "\n";
     }
     else
@@ -556,7 +554,8 @@ void MainWindow::on_actionSave_triggered()
     QUrl tempAF = currentMovie->getAudioFile();
     if(tempAF.isEmpty() == false)
     {
-        QString tempAudioFile = tempAF.toEncoded();
+        QFileInfo fileInf(tempAF.toLocalFile());
+        QString tempAudioFile = fileInf.fileName();
         out << tempAudioFile << "\n";
     }
     else
