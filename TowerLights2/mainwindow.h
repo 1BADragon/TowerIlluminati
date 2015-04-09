@@ -133,6 +133,8 @@ private:
     void changeCurrentFrame(int value);
     void updateMainTower();\
 
+    //Set Global Filename
+    QString fileName;
 
     void closeEvent (QCloseEvent *event);
 

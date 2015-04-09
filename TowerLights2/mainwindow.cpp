@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 
-//Set Global Filename
-QString fileName;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -84,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     saveTimer = new QTimer();
     connect(saveTimer, SIGNAL(timeout()), this, SLOT(saveWarning()));
-    saveTimer->setInterval(10000);
+    saveTimer->setInterval(600000); //auto save every 10 min
     saveTimer->start();
 }
 
@@ -908,10 +906,28 @@ void MainWindow::updateMainTower()
 
 void MainWindow::saveWarning()
 {
+    if(fileName == NULL || fileName == "")
+    {
     QMessageBox msgBox;
     msgBox.setText("You've been at it for a while would you like to save?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.exec();
+    int reply = msgBox.exec();
+
+
+    switch(reply)
+    {
+    case QMessageBox::Yes:
+        on_actionSave_triggered();
+        break;
+    case QMessageBox::No:
+        break;
+    }
+    }
+    else
+    {
+        on_actionSave_triggered();
+    }
+
     saveTimer->start();
 }
 
