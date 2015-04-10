@@ -216,7 +216,7 @@ void MainWindow::on_actionOpen_triggered()
                 fileName+=mainfile;
                 qDebug() << line;
                 qDebug() << fileName;
-                currentMovie->setAudio(QUrl(line));
+                currentMovie->setAudio(QUrl::fromLocalFile(line));
             }
 
                 //get current color rgb values for version 3
