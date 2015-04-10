@@ -102,6 +102,15 @@ void Movie::printTimeStamps()
     }
 }
 
+int Movie::getFrameFromTime(int targetTime)
+{
+    int desiredFrame=0;
+    while ( frameSequence->at(desiredFrame)->getTimeStamp() < targetTime){
+        desiredFrame++;
+    }
+    return --desiredFrame;
+}
+
 
 int compareFrames(const void *a, const void *b)
 {

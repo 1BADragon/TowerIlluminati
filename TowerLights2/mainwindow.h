@@ -100,6 +100,8 @@ private slots:
 
     void saveWarning();
 
+    void on_mediaSlider_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
 

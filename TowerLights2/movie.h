@@ -28,7 +28,7 @@ public:
   Frame* getCurrentFrame();
   void sortFrames();
   void printTimeStamps();
-
+  int getFrameFromTime(int time);
 
 private:
   QUrl mainFile;

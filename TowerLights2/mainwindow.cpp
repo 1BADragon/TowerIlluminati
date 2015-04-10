@@ -1259,3 +1259,8 @@ void MainWindow::on_actionClose_triggered()
 {
     on_actionExit_triggered();
 }
+
+void MainWindow::on_mediaSlider_sliderMoved(int position)
+{
+    ui->previewScrollBar->setValue(currentMovie->getFrameFromTime(position*1000));
+}
