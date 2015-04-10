@@ -102,6 +102,8 @@ private slots:
 
     void on_mediaSlider_sliderMoved(int position);
 
+    void on_audioDurationChanged(qint64 duration);
+
 private:
     Ui::MainWindow *ui;
 

@@ -71,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setUpMats();
     updateUI();
 
+    connect(audio, SIGNAL(durationChanged(qint64)),this,SLOT(on_audioDurationChanged(qint64)));
+    ui->mediaSlider->setRange(0,0);
+
     //set up some button filters so they can capture shift presses
     ui->newFrameButton->installEventFilter(this);
 
@@ -711,17 +714,19 @@ void MainWindow::saveCurrentFrame()
 
 void MainWindow::on_actionOpen_Audio_File_triggered()
 {
-    currentMovie->setAudio(QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
-                                                                            tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)"))));
-    audio->setMedia(currentMovie->getAudioFile());
-    audio->stop();
-    ui->mediaSlider->setRange(0,audio->duration()/1000);
-    qDebug() << audio->duration();
+    QUrl fileToOpen = QUrl::fromLocalFile(QFileDialog::getOpenFileName(this,
+                                                                       tr("Open Audio"), "/", tr("Audio Files (*.wav *.mp3 *.m4a)")));
+    if (!fileToOpen.isEmpty()){
+        currentMovie->setAudio(fileToOpen);
+        audio->setMedia(currentMovie->getAudioFile());
+        audio->stop();
+    }
 }
 
 void MainWindow::on_previewScrollBar_valueChanged(int value)
 {
     changeCurrentFrame(value);
+    ui->mediaSlider->setValue(value);
 }
 
 void MainWindow::updateUI()
@@ -1007,8 +1012,6 @@ void MainWindow::on_playPauseButton_clicked()
         timer.start(currentFrame->getTimeStamp());
         audio->setPosition(currentFrame->getTimeStamp());
         audio->play();
-        ui->mediaSlider->setRange(0,audio->duration()/1000);
-        qDebug() << audio->duration();
         qint64 time;
 
         if (nextFrame == NULL)
@@ -1289,4 +1292,10 @@ void MainWindow::on_actionClose_triggered()
 void MainWindow::on_mediaSlider_sliderMoved(int position)
 {
     ui->previewScrollBar->setValue(currentMovie->getFrameFromTime(position*1000));
+}
+
+void MainWindow::on_audioDurationChanged(qint64 duration)
+{
+    ui->mediaSlider->setRange(0,duration/1000);
+    ui->mediaSlider->setValue(currentMovie->getCurrentFrame()->getTimeStamp()/1000);
 }
