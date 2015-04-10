@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 
-//Set Global Filename
-QString fileName;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -84,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     saveTimer = new QTimer();
     connect(saveTimer, SIGNAL(timeout()), this, SLOT(saveWarning()));
-    saveTimer->setInterval(10000);
+    saveTimer->setInterval(600000); //auto save every 10 min
     saveTimer->start();
 }
 
@@ -205,11 +203,21 @@ void MainWindow::on_actionOpen_triggered()
                     }
                 }
 
-                //Get audio filename
-                if(count == 2 && line != "NoAudioFile" && version == 4)
-                {
-                    currentMovie->setAudio(line);
-                }
+            //Get audio filename
+            if(count == 2 && line != "NoAudioFile" && version == 4)
+            {
+                QUrl temp;
+                QString mainfile = QUrl(fileName).fileName();
+                qDebug() << line;
+                qDebug() << mainfile;
+                qDebug() << mainfile.size();
+                fileName.chop(mainfile.size());
+                line=fileName+line;
+                fileName+=mainfile;
+                qDebug() << line;
+                qDebug() << fileName;
+                currentMovie->setAudio(QUrl(line));
+            }
 
                 //get current color rgb values for version 3
                 if(count == 2 && version == 3)
@@ -915,10 +923,28 @@ void MainWindow::updateMainTower()
 
 void MainWindow::saveWarning()
 {
+    if(fileName == NULL || fileName == "")
+    {
     QMessageBox msgBox;
     msgBox.setText("You've been at it for a while would you like to save?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.exec();
+    int reply = msgBox.exec();
+
+
+    switch(reply)
+    {
+    case QMessageBox::Yes:
+        on_actionSave_triggered();
+        break;
+    case QMessageBox::No:
+        break;
+    }
+    }
+    else
+    {
+        on_actionSave_triggered();
+    }
+
     saveTimer->start();
 }
 
