@@ -198,7 +198,17 @@ void MainWindow::on_actionOpen_triggered()
             //Get audio filename
             if(count == 2 && line != "NoAudioFile" && version == 4)
             {
-                currentMovie->setAudio(line);
+                QUrl temp;
+                QString mainfile = QUrl(fileName).fileName();
+                qDebug() << line;
+                qDebug() << mainfile;
+                qDebug() << mainfile.size();
+                fileName.chop(mainfile.size());
+                line=fileName+line;
+                fileName+=mainfile;
+                qDebug() << line;
+                qDebug() << fileName;
+                currentMovie->setAudio(QUrl(line));
             }
 
             //get current color rgb values for version 3
