@@ -49,8 +49,8 @@ DISTFILES += \
     colorPallet.qml \
     windowScroll.qml \
     currentColor.qml \
-    towerGrid.qml \
-    TowerPreviewer.qml
+    previewer.qml \
+    towerGrid.qml
 
 RESOURCES += \
     resources.qrc

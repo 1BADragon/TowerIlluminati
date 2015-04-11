@@ -4,5 +4,6 @@
         <file>towerGrid.qml</file>
         <file>windowScroll.qml</file>
         <file>currentColor.qml</file>
+        <file>previewer.qml</file>
     </qresource>
 </RCC>
