@@ -160,11 +160,7 @@ void MainWindow::on_actionOpen_triggered()
 {
     fileName = QFileDialog::getOpenFileName(this,
                                             tr("Open File"), "/home/", tr("Tan Files (*.tan *.tan2)"));
-    if (fileName == "")
-    {
-
-    }
-    else
+    if (!fileName.isEmpty())
     {
         delete currentMovie;
         currentMovie= new Movie();
@@ -398,71 +394,74 @@ void MainWindow::on_actionExport_triggered()
     QString exportFileName = QFileDialog::getSaveFileName(this, tr("Export File"),
                                                           "/home/untitled.tan",
                                                           tr("Tan Files (*.tan)"));
-    // Create a new file
-    QFile file(exportFileName);
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    QTextStream out(&file);
-
-    //Version Number
-    out << "0.3\n";
-
-    //Audio filename
-    QUrl tempAF = currentMovie->getAudioFile();
-    if(tempAF.isEmpty() == false)
+    if (!exportFileName.isEmpty())
     {
-        QFileInfo fileInf(tempAF.toLocalFile());
-        QString tempAudioFile = fileInf.fileName();
-        out << tempAudioFile << "\n";
-    }
-    else
-    {
-        out << "NoAudioFile\n";
-    }
+        // Create a new file
+        QFile file(exportFileName);
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&file);
 
-    //Frame Count and size
-    out << currentMovie->getFrameCount() << " 10 4\n";
+        //Version Number
+        out << "0.3\n";
 
-    //RGB Values for each pixel of each frame
-    int temp = currentMovie->getFrameCount();
-    for(int i = 0; i < temp; i++)
-    {
-        //Get timestamp of frame and convert to correct format for output
-        qint64 msecs = currentMovie->getFrame(i)->getTimeStamp();
-        int hours = msecs/(1000*60*60);
-        int minutes = (msecs-(hours*1000*60*60))/(1000*60);
-        int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
-        int milliseconds = msecs-(seconds*1000)-(minutes*1000*60)-(hours*1000*60*60);
-        //pad output with zeroes
-        QString tempMin = QString("%1").arg(minutes, 2, 10, QChar('0'));
-        QString tempSec = QString("%1").arg(seconds, 2, 10, QChar('0'));
-        QString tempMilli = QString("%1").arg(milliseconds, 3, 10, QChar('0'));
-        out << tempMin << ":" << tempSec << "." << tempMilli << "\n";
-
-        for(int j = 0; j < 10; j++)
+        //Audio filename
+        QUrl tempAF = currentMovie->getAudioFile();
+        if(tempAF.isEmpty() == false)
         {
-            for(int k = 0; k < 4; k++)
+            QFileInfo fileInf(tempAF.toLocalFile());
+            QString tempAudioFile = fileInf.fileName();
+            out << tempAudioFile << "\n";
+        }
+        else
+        {
+            out << "NoAudioFile\n";
+        }
+
+        //Frame Count and size
+        out << currentMovie->getFrameCount() << " 10 4\n";
+
+        //RGB Values for each pixel of each frame
+        int temp = currentMovie->getFrameCount();
+        for(int i = 0; i < temp; i++)
+        {
+            //Get timestamp of frame and convert to correct format for output
+            qint64 msecs = currentMovie->getFrame(i)->getTimeStamp();
+            int hours = msecs/(1000*60*60);
+            int minutes = (msecs-(hours*1000*60*60))/(1000*60);
+            int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
+            int milliseconds = msecs-(seconds*1000)-(minutes*1000*60)-(hours*1000*60*60);
+            //pad output with zeroes
+            QString tempMin = QString("%1").arg(minutes, 2, 10, QChar('0'));
+            QString tempSec = QString("%1").arg(seconds, 2, 10, QChar('0'));
+            QString tempMilli = QString("%1").arg(milliseconds, 3, 10, QChar('0'));
+            out << tempMin << ":" << tempSec << "." << tempMilli << "\n";
+
+            for(int j = 0; j < 10; j++)
             {
-                QColor tempColor = currentMovie->getFrame(i)->TowerGridPixel(j,k)->getColor();
-                QString tempRed = QString("%1").arg(tempColor.red());
-                QString tempGreen = QString("%1").arg(tempColor.green());
-                QString tempBlue = QString("%1").arg(tempColor.blue());
-                if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                for(int k = 0; k < 4; k++)
                 {
-                    out << "0 0 0 ";
-                }
-                else
-                {
-                    out << tempRed << " " << tempGreen << " " << tempBlue << " ";
-                }
-                if( k == 3)
-                {
-                    out << "\n";
+                    QColor tempColor = currentMovie->getFrame(i)->TowerGridPixel(j,k)->getColor();
+                    QString tempRed = QString("%1").arg(tempColor.red());
+                    QString tempGreen = QString("%1").arg(tempColor.green());
+                    QString tempBlue = QString("%1").arg(tempColor.blue());
+                    if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                    {
+                        out << "0 0 0 ";
+                    }
+                    else
+                    {
+                        out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+                    }
+                    if( k == 3)
+                    {
+                        out << "\n";
+                    }
                 }
             }
         }
-    }
 
-    file.close();
+        file.close();
+    }
 }
 
 //this function is called when file>>Save As is selected
@@ -474,78 +473,81 @@ void MainWindow::on_actionSave_As_triggered()
     fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                             "/home/untitled.tan2",
                                             tr("Tan Files (*.tan2)"));
-    // Create a new file
-    QFile file(fileName);
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    QTextStream out(&file);
-
-    //Version Number
-    out << "0.4\n";
-
-    //Audio filename
-    QUrl tempAF = currentMovie->getAudioFile();
-    if(tempAF.isEmpty() == false)
+    if (!fileName.isEmpty())
     {
-        QFileInfo fileInf(tempAF.toLocalFile());
-        QString tempAudioFile = fileInf.fileName();
-        out << tempAudioFile << "\n";
-    }
-    else
-    {
-        out << "NoAudioFile\n";
-    }
+        // Create a new file
+        QFile file(fileName);
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&file);
 
-    //Current Color
-    out << red->value() << " " << green->value() << " " << blue->value() << "\n";
+        //Version Number
+        out << "0.4\n";
 
-    //Color Pallet RGB values
-    for(int i = 0; i < 2; i++)
-    {
-        for(int j = 0; j < 8; j++)
+        //Audio filename
+        QUrl tempAF = currentMovie->getAudioFile();
+        if(tempAF.isEmpty() == false)
         {
-            QVariant temp = colorPallet[i][j]->property("color");
-            QColor tempColor = temp.value<QColor>();
-            QString tempRed = QString("%1").arg(tempColor.red());
-            QString tempGreen = QString("%1").arg(tempColor.green());
-            QString tempBlue = QString("%1").arg(tempColor.blue());
-            out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+            QFileInfo fileInf(tempAF.toLocalFile());
+            QString tempAudioFile = fileInf.fileName();
+            out << tempAudioFile << "\n";
         }
-    }
-    out << "\n";
-
-    //Frame Count and size
-    out << currentMovie->getFrameCount() << " 10 4\n";
-
-    //RGB Values for each pixel of each frame
-    int temp = currentMovie->getFrameCount();
-    for(int i = 0; i < temp; i++)
-    {
-        out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
-        for(int j = 0; j < 20; j++)
+        else
         {
-            for(int k = 0; k < 12; k++)
+            out << "NoAudioFile\n";
+        }
+
+        //Current Color
+        out << red->value() << " " << green->value() << " " << blue->value() << "\n";
+
+        //Color Pallet RGB values
+        for(int i = 0; i < 2; i++)
+        {
+            for(int j = 0; j < 8; j++)
             {
-                QColor tempColor = currentMovie->getFrame(i)->FullGridPixel(j,k)->getColor();
+                QVariant temp = colorPallet[i][j]->property("color");
+                QColor tempColor = temp.value<QColor>();
                 QString tempRed = QString("%1").arg(tempColor.red());
                 QString tempGreen = QString("%1").arg(tempColor.green());
                 QString tempBlue = QString("%1").arg(tempColor.blue());
-                if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+            }
+        }
+        out << "\n";
+
+        //Frame Count and size
+        out << currentMovie->getFrameCount() << " 10 4\n";
+
+        //RGB Values for each pixel of each frame
+        int temp = currentMovie->getFrameCount();
+        for(int i = 0; i < temp; i++)
+        {
+            out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
+            for(int j = 0; j < 20; j++)
+            {
+                for(int k = 0; k < 12; k++)
                 {
-                    out << "0 0 0 ";
-                }
-                else
-                {
-                    out << tempRed << " " << tempGreen << " " << tempBlue << " ";
-                }
-                if( k == 11)
-                {
-                    out << "\n";
+                    QColor tempColor = currentMovie->getFrame(i)->FullGridPixel(j,k)->getColor();
+                    QString tempRed = QString("%1").arg(tempColor.red());
+                    QString tempGreen = QString("%1").arg(tempColor.green());
+                    QString tempBlue = QString("%1").arg(tempColor.blue());
+                    if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                    {
+                        out << "0 0 0 ";
+                    }
+                    else
+                    {
+                        out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+                    }
+                    if( k == 11)
+                    {
+                        out << "\n";
+                    }
                 }
             }
         }
-    }
 
-    file.close();
+        file.close();
+    }
 }
 
 //this function is called when file>>Save is selected
@@ -561,77 +563,80 @@ void MainWindow::on_actionSave_triggered()
                                                 tr("Tan Files (*.tan2)"));
     }
     // Create a new file
-    QFile file(fileName);
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    QTextStream out(&file);
-
-    //Version Number
-    out << "0.4\n";
-
-    //Audio filename
-    QUrl tempAF = currentMovie->getAudioFile();
-    if(tempAF.isEmpty() == false)
+    if (!fileName.isEmpty())
     {
-        QFileInfo fileInf(tempAF.toLocalFile());
-        QString tempAudioFile = fileInf.fileName();
-        out << tempAudioFile << "\n";
-    }
-    else
-    {
-        out << "NoAudioFile\n";
-    }
+        QFile file(fileName);
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&file);
 
-    //Current Color
-    out << red->value() << " " << green->value() << " " << blue->value() << "\n";
+        //Version Number
+        out << "0.4\n";
 
-    //Color Pallet RGB values
-    for(int i = 0; i < 2; i++)
-    {
-        for(int j = 0; j < 8; j++)
+        //Audio filename
+        QUrl tempAF = currentMovie->getAudioFile();
+        if(tempAF.isEmpty() == false)
         {
-            QVariant temp = colorPallet[i][j]->property("color");
-            QColor tempColor = temp.value<QColor>();
-            QString tempRed = QString("%1").arg(tempColor.red());
-            QString tempGreen = QString("%1").arg(tempColor.green());
-            QString tempBlue = QString("%1").arg(tempColor.blue());
-            out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+            QFileInfo fileInf(tempAF.toLocalFile());
+            QString tempAudioFile = fileInf.fileName();
+            out << tempAudioFile << "\n";
         }
-    }
-    out << "\n";
-
-    //Frame Count and size
-    out << currentMovie->getFrameCount() << " 10 4\n";
-
-    //RGB Values for each pixel of each frame
-    int temp = currentMovie->getFrameCount();
-    for(int i = 0; i < temp; i++)
-    {
-        out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
-        for(int j = 0; j < 20; j++)
+        else
         {
-            for(int k = 0; k < 12; k++)
+            out << "NoAudioFile\n";
+        }
+
+        //Current Color
+        out << red->value() << " " << green->value() << " " << blue->value() << "\n";
+
+        //Color Pallet RGB values
+        for(int i = 0; i < 2; i++)
+        {
+            for(int j = 0; j < 8; j++)
             {
-                QColor tempColor = currentMovie->getFrame(i)->FullGridPixel(j,k)->getColor();
+                QVariant temp = colorPallet[i][j]->property("color");
+                QColor tempColor = temp.value<QColor>();
                 QString tempRed = QString("%1").arg(tempColor.red());
                 QString tempGreen = QString("%1").arg(tempColor.green());
                 QString tempBlue = QString("%1").arg(tempColor.blue());
-                if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+            }
+        }
+        out << "\n";
+
+        //Frame Count and size
+        out << currentMovie->getFrameCount() << " 10 4\n";
+
+        //RGB Values for each pixel of each frame
+        int temp = currentMovie->getFrameCount();
+        for(int i = 0; i < temp; i++)
+        {
+            out << currentMovie->getFrame(i)->getTimeStamp() << "\n";
+            for(int j = 0; j < 20; j++)
+            {
+                for(int k = 0; k < 12; k++)
                 {
-                    out << "0 0 0 ";
-                }
-                else
-                {
-                    out << tempRed << " " << tempGreen << " " << tempBlue << " ";
-                }
-                if( k == 11)
-                {
-                    out << "\n";
+                    QColor tempColor = currentMovie->getFrame(i)->FullGridPixel(j,k)->getColor();
+                    QString tempRed = QString("%1").arg(tempColor.red());
+                    QString tempGreen = QString("%1").arg(tempColor.green());
+                    QString tempBlue = QString("%1").arg(tempColor.blue());
+                    if(tempRed == "128" && tempGreen == "128" && tempBlue == "128")
+                    {
+                        out << "0 0 0 ";
+                    }
+                    else
+                    {
+                        out << tempRed << " " << tempGreen << " " << tempBlue << " ";
+                    }
+                    if( k == 11)
+                    {
+                        out << "\n";
+                    }
                 }
             }
         }
-    }
 
-    file.close();
+        file.close();
+    }
 }
 
 //these functions sync the spin boxes and the colorwheel
