@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "movie.h"
+#include "timer.h"
 #include <QMediaPlayer>
 #include <QQuickItem>
 
@@ -33,7 +34,10 @@ private:
     QMediaPlayer* currentAudio;
 
     QQuickItem *tower[10][4];
+    Timer *timer;
+
     int currentFrameNumber;
+    bool stop;
 
     void setUpMatrix();
     void updateUI();

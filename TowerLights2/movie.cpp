@@ -2,43 +2,43 @@
 
 Movie::Movie()
 {
-  frameSequence = new QList <Frame*>;
-  currentIndex = 0;
-  currentFrameNumber = 0;
+    frameSequence = new QList <Frame*>;
+    currentIndex = 0;
+    currentFrameNumber = 0;
 }
 
 void Movie::setAudio(QUrl url)
 {
-  audioFile = url;
-  //load audio player
+    audioFile = url;
+    //load audio player
 }
 
 QUrl Movie::getAudioFile()
 {
-  return audioFile;
+    return audioFile;
 }
 
 int Movie::getFrameCount()
 {
-  return frameSequence->length();
+    return frameSequence->length();
 }
 
 void Movie::newFrame(){
-  frameSequence->append(new Frame());
+    frameSequence->append(new Frame());
 }
 
 void Movie::newFrame(int index){
-  frameSequence->insert(index, new Frame());
+    frameSequence->insert(index, new Frame());
 }
 
 void Movie::insertFrame(int index, Frame *f)
 {
-  frameSequence->insert(index, f);
+    frameSequence->insert(index, f);
 }
 
 void Movie::setFrameTime(int index, qint64 time)
 {
-  frameSequence->at(index)->setTimeStamp(time);
+    frameSequence->at(index)->setTimeStamp(time);
 }
 
 Frame* Movie::getNextFrame()
@@ -54,17 +54,24 @@ Frame* Movie::getNextFrame()
 
 Frame *Movie::getFrame(int i)
 {
-    return frameSequence->at(i);
+    if(i < frameSequence->length())
+    {
+        return frameSequence->at(i);
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 void Movie::reset()
 {
-  currentIndex = 0;
+    currentIndex = 0;
 }
 
 void Movie::setFrame(int index, Frame *f)
 {
-  (*frameSequence)[index] = f;
+    (*frameSequence)[index] = f;
 }
 
 void Movie::setFile(QUrl url)
@@ -81,7 +88,7 @@ int Movie::getFrameNumber()
 
 void Movie::setFrameNumber(int x)
 {
-  currentFrameNumber = x;
+    currentFrameNumber = x;
 }
 
 Frame *Movie::getCurrentFrame()

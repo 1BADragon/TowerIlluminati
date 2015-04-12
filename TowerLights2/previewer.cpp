@@ -9,10 +9,22 @@ Previewer::Previewer(QWidget *parent) :
     currentMovie = NULL;
     currentAudio = NULL;
 
+    timer = new Timer();
+
     currentFrameNumber = 0;
     ui->horizontalScrollBar->setRange(0,0);
 
     setUpMatrix();
+
+    for(int x = 0; x < 4; x++)
+    {
+        for(int y = 0; y < 10; y++)
+        {
+            tower[y][x]->setProperty("color", "grey");
+        }
+    }
+
+    stop = true;
 
 }
 
@@ -34,7 +46,62 @@ void Previewer::on_pushButton_clicked()
 {
     if(currentMovie != NULL)
     {
+        if (stop==false){
+            stop = true;
+            //audio->pause();
+            updateUI();
+        }else{
+            stop = false;
+            int maxFrames = currentMovie->getFrameCount();
+            Frame* currentFrame = currentMovie->getFrame(currentFrameNumber);
+            Frame* nextFrame = currentMovie->getFrame(currentFrameNumber + 1);
+            timer->start(currentFrame->getTimeStamp());
+            //audio->setPosition(currentFrame->getTimeStamp());
+            //audio->play();
+            qint64 time;
 
+            if (nextFrame == NULL)
+            {
+                stop = true;
+            }
+            while(stop == false){
+                if(currentFrameNumber < maxFrames){
+                    //qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
+                    //qDebug() << "currentTime: " << timer.getTime();
+                    //qDebug() << "currentFrame: " << currentFrame;
+                    //qDebug() << "currentFrameNumber: " << currentFrameNumber;
+                    //qDebug() << "maxFrames: " << maxFrames;
+                    //qDebug() << "";
+                    if (true){ //this is flag for whether a music file is loaded or not
+                        time = timer->getTime();
+                    }
+                    else{
+                        //time = audio->position();
+                    }
+                    if(nextFrame->getTimeStamp() <= time)
+                    {
+                        currentFrame = nextFrame;
+                        nextFrame = currentMovie->getFrame(currentFrameNumber+1);
+
+                        if(nextFrame != NULL && (currentFrameNumber + 1) < maxFrames)
+                        {
+                            ui->horizontalScrollBar->setValue(currentFrameNumber + 1);
+                            currentFrameNumber += 1;
+                            updateUI();
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+                else{
+                    stop = true;
+                }
+            }
+            timer->stop();
+            //audio->pause();
+        }
     }
 }
 
@@ -60,7 +127,7 @@ void Previewer::setUpMatrix()
 
     for(int x = 0; x < 4; x++)
     {
-        currentColumn = rows[0]->childItems();
+        currentColumn = rows[x]->childItems();
         for(int y = 0; y < 10; y++)
         {
             tower[y][x] = currentColumn[y];
@@ -71,13 +138,20 @@ void Previewer::setUpMatrix()
 
 void Previewer::updateUI()
 {
-    Frame* temp = currentMovie->getFrame(currentFrameNumber);
-    for(int x = 0; x < 4; x++)
+    if(currentMovie != NULL)
     {
-        for(int y = 0; y < 10; y++)
+        Frame* temp = currentMovie->getFrame(currentFrameNumber);
+        for(int x = 0; x < 4; x++)
         {
-            tower[y][x]->setProperty("color", temp->TowerGridPixel(y,x)->getColor());
+            for(int y = 0; y < 10; y++)
+            {
+                tower[y][x]->setProperty("color", temp->TowerGridPixel(y,x)->getColor());
+            }
         }
+    }
+    else
+    {
+        qDebug() << "currentMovie is NULL!!";
     }
     qApp->processEvents();
 }

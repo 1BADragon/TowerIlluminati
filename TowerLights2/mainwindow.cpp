@@ -1280,6 +1280,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::on_actionPreview_Mode_triggered()
 {
+    this->saveCurrentFrame();
     previewer.updateData(currentMovie, audio);
     previewer.show();
 }
