@@ -87,6 +87,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(saveTimer, SIGNAL(timeout()), this, SLOT(saveWarning()));
     saveTimer->setInterval(600000); //auto save every 10 min
     saveTimer->start();
+
+    stop = true;
 }
 
 MainWindow::~MainWindow()
