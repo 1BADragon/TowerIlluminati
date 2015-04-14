@@ -48,7 +48,7 @@ void Previewer::on_pushButton_clicked()
     {
         if (stop==false){
             stop = true;
-            //audio->pause();
+            currentAudio->pause();
             updateUI();
         }else{
             stop = false;
@@ -56,8 +56,8 @@ void Previewer::on_pushButton_clicked()
             Frame* currentFrame = currentMovie->getFrame(currentFrameNumber);
             Frame* nextFrame = currentMovie->getFrame(currentFrameNumber + 1);
             timer->start(currentFrame->getTimeStamp());
-            //audio->setPosition(currentFrame->getTimeStamp());
-            //audio->play();
+            currentAudio->setPosition(currentFrame->getTimeStamp());
+            currentAudio->play();
             qint64 time;
 
             if (nextFrame == NULL)
@@ -76,7 +76,7 @@ void Previewer::on_pushButton_clicked()
                         time = timer->getTime();
                     }
                     else{
-                        //time = audio->position();
+                        time = currentAudio->position();
                     }
                     if(nextFrame->getTimeStamp() <= time)
                     {
@@ -100,7 +100,7 @@ void Previewer::on_pushButton_clicked()
                 }
             }
             timer->stop();
-            //audio->pause();
+            currentAudio->pause();
         }
     }
 }
