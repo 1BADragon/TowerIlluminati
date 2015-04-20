@@ -1003,6 +1003,13 @@ void MainWindow::on_currentTime_timeChanged(const QTime &time)
 {
     qint64 tempTime = time.hour()*(1000*60*60) + time.minute()*(1000*60) + time.second()*1000 + time.msec();
     currentMovie->getCurrentFrame()->setTimeStamp(tempTime);
+    if(stop == true)
+    {
+        saveCurrentFrame();
+        currentMovie->sortFrames();
+        updateMainTower();
+        updateUI();
+    }
 }
 
 void MainWindow::on_playPauseButton_clicked()
@@ -1289,12 +1296,6 @@ void MainWindow::on_actionPreview_Mode_triggered()
     previewer.show();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    currentMovie->sortFrames();
-    updateUI();
-}
-
 void MainWindow::on_actionClose_triggered()
 {
     on_actionExit_triggered();
@@ -1309,4 +1310,12 @@ void MainWindow::on_audioDurationChanged(qint64 duration)
 {
     ui->mediaSlider->setRange(0,duration/1000);
     ui->mediaSlider->setValue(currentMovie->getCurrentFrame()->getTimeStamp()/1000);
+}
+
+void MainWindow::on_SortButton_clicked()
+{
+    saveCurrentFrame();
+    currentMovie->sortFrames();
+    updateMainTower();
+    updateUI();
 }

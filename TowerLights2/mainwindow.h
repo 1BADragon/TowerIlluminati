@@ -59,7 +59,6 @@ private slots:
 
     void on_actionOpen_triggered();
 
-
     void on_newFrameButton_clicked();
 
     void on_previewScrollBar_valueChanged(int value);
@@ -94,8 +93,6 @@ private slots:
 
     void on_actionPreview_Mode_triggered();
 
-    void on_pushButton_clicked();
-
     void on_actionClose_triggered();
 
     void saveWarning();
@@ -103,6 +100,8 @@ private slots:
     void on_mediaSlider_sliderMoved(int position);
 
     void on_audioDurationChanged(qint64 duration);
+
+    void on_SortButton_clicked();
 
 private:
     Ui::MainWindow *ui;

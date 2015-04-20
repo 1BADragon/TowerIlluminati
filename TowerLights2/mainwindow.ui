@@ -491,7 +491,7 @@
      <string>Randomize</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="SortButton">
     <property name="geometry">
      <rect>
       <x>870</x>
@@ -501,7 +501,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Sort Frames</string>
     </property>
    </widget>
   </widget>
