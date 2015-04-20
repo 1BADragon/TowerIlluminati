@@ -940,7 +940,7 @@ void MainWindow::saveWarning()
     if(fileName == NULL || fileName == "")
     {
     QMessageBox msgBox;
-    msgBox.setText("You've been at it for a while would you like to save?");
+    msgBox.setText("You've been at it for a while. Would you like to save?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     int reply = msgBox.exec();
 
