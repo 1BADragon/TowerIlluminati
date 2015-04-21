@@ -4,6 +4,16 @@
 #include <QObject>
 #include <QString>
 
+/*!
+ * \brief The colorPalette class
+ */
+
+/*!
+ * This class serves as a helper class to the Color Palette QML code.
+ * It keeps track of which color is currently being
+ * produced and return a color in accordence.
+ */
+
 class colorPalette : public QObject
 {
   Q_OBJECT
@@ -13,7 +23,7 @@ public:
     Q_INVOKABLE QString getColor();
 
 private:
-    int count;
+    int count; /*!< keeps track of the current color */
 };
 
 #endif // COLORPALETTE_H

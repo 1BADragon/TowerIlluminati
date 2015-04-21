@@ -1,4 +1,4 @@
-/*
+/*!
  * colorwheel.h and colorwheel.cpp are adapted from a github repository
  * accesible at https://github.com/liuyanghejerry/Qt-Plus/tree/master/develop/ColorWheel
  *
@@ -13,6 +13,10 @@
 
 #include <QWidget>
 #include <QString>
+
+/*!
+ * \brief The ColorWheel class
+ */
 
 class ColorWheel : public QWidget
 {

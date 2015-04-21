@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     frame.cpp \
     movie.cpp \
     colorwheel.cpp \
-    color.cpp \
     colorpalette.cpp \
     timer.cpp \
     previewer.cpp
@@ -35,7 +34,6 @@ HEADERS  += mainwindow.h \
     frame.h \
     movie.h \
     colorwheel.h \
-    color.h \
     colorpalette.h \
     timer.h \
     previewer.h

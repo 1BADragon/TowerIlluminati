@@ -20,7 +20,6 @@
  */
 #include "mainwindow.h"
 #include "colorwheel.h"
-#include "color.h"
 #include <QApplication>
 #include <QColor>
 #include <QQmlComponent>
