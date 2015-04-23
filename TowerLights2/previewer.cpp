@@ -66,12 +66,6 @@ void Previewer::on_pushButton_clicked()
             }
             while(stop == false){
                 if(currentFrameNumber < maxFrames){
-                    //qDebug() << "currentFrame: " << currentFrame->getTimeStamp();
-                    //qDebug() << "currentTime: " << timer.getTime();
-                    //qDebug() << "currentFrame: " << currentFrame;
-                    //qDebug() << "currentFrameNumber: " << currentFrameNumber;
-                    //qDebug() << "maxFrames: " << maxFrames;
-                    //qDebug() << "";
                     if (true){ //this is flag for whether a music file is loaded or not
                         time = timer->getTime();
                     }
@@ -83,11 +77,11 @@ void Previewer::on_pushButton_clicked()
                         currentFrame = nextFrame;
                         nextFrame = currentMovie->getFrame(currentFrameNumber+1);
 
-                        if(nextFrame != NULL && (currentFrameNumber + 1) < maxFrames)
+                        if(nextFrame != NULL && (currentFrameNumber) < maxFrames)
                         {
                             ui->horizontalScrollBar->setValue(currentFrameNumber + 1);
-                            currentFrameNumber += 1;
                             updateUI();
+                            currentFrameNumber++;
                         }
                         else
                         {

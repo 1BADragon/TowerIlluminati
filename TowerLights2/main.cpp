@@ -1,16 +1,17 @@
-/*
- * Title: Tower Animator Project
+/*! \mainpage
+ * Title: Tower Animator Software Design
+ *
  * Team Members:
  *  1st Semester:
- *      Matthew Brown
- *      Ranger Adams
- *      Paul Bailey
- *      Emeth Thomson
+ *      -# Matthew Brown
+ *      -# Ranger Adams
+ *      -# Paul Bailey
+ *      -# Emeth Thomson
  *
  *  2nd Semester:
- *      Matthew Brown
- *      Ranger Adams
- *      Cameron Simon
+ *      -# Matthew Brown
+ *      -# Ranger Adams
+ *      -# Cameron Simon
  *
  * This Program was created through the University of Idaho's capstone design class.
  * The use of this program is for the ACM club's tower light show.
@@ -25,8 +26,6 @@
 #include <QQmlComponent>
 #include <QQmlEngine>
 #include <QtDeclarative/QDeclarativeView>
-
-extern QWidget widget;
 
 int main(int argc, char *argv[])
 {

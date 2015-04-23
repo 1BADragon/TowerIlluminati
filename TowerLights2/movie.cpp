@@ -3,7 +3,6 @@
 Movie::Movie()
 {
     frameSequence = new QList <Frame*>;
-    currentIndex = 0;
     currentFrameNumber = 0;
 }
 
@@ -43,8 +42,8 @@ void Movie::setFrameTime(int index, qint64 time)
 
 Frame* Movie::getNextFrame()
 {
-    if(currentIndex + 1 < frameSequence->length()){
-        return frameSequence->at(currentIndex + 1);
+    if(currentFrameNumber + 1 < frameSequence->length()){
+        return frameSequence->at(currentFrameNumber + 1);
     }
     else
     {
@@ -66,7 +65,7 @@ Frame *Movie::getFrame(int i)
 
 void Movie::reset()
 {
-    currentIndex = 0;
+    currentFrameNumber = 0;
 }
 
 void Movie::setFrame(int index, Frame *f)
