@@ -18,12 +18,16 @@ class colorPalette : public QObject
 {
   Q_OBJECT
 public:
+    //! Constructor
     colorPalette();
+    //! Destructor
     ~colorPalette();
+    //! Uses the count variable to return a default color pallette value in a hexadecimal value
     Q_INVOKABLE QString getColor();
 
 private:
-    int count; /*!< keeps track of the current color */
+    /*! keeps track of the current color */
+    int count;
 };
 
 #endif // COLORPALETTE_H
