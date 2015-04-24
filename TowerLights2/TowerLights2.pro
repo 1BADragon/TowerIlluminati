@@ -19,6 +19,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    grid.cpp \
     pixel.cpp \
     frame.cpp \
     movie.cpp \
@@ -28,6 +29,7 @@ SOURCES += main.cpp\
     previewer.cpp
 
 HEADERS  += mainwindow.h \
+    grid.h \
     pixel.h \
     frame.h \
     movie.h \
