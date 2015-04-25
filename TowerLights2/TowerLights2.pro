@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     colorwheel.cpp \
     colorpalette.cpp \
     timer.cpp \
-    previewer.cpp
+    previewer.cpp \
+    mainwindow_util.cpp
 
 HEADERS  += mainwindow.h \
     pixel.h \

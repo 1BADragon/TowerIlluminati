@@ -13,6 +13,7 @@ Previewer::Previewer(QWidget *parent) :
 
     currentFrameNumber = 0;
     ui->horizontalScrollBar->setRange(0,0);
+    //ui->horizontalScrollBar->setValue(0);
 
     setUpMatrix();
 
@@ -39,6 +40,7 @@ void Previewer::updateData(Movie *movie, QMediaPlayer *audio)
     currentAudio = audio;
 
     ui->horizontalScrollBar->setRange(0, currentMovie->getFrameCount() - 1);
+    ui->horizontalScrollBar->setValue(0);
     currentFrameNumber = 0;
 }
 
@@ -66,7 +68,7 @@ void Previewer::on_pushButton_clicked()
             }
             while(stop == false){
                 if(currentFrameNumber < maxFrames){
-                    if (true){ //this is flag for whether a music file is loaded or not
+                    if (true){
                         time = timer->getTime();
                     }
                     else{
@@ -74,14 +76,14 @@ void Previewer::on_pushButton_clicked()
                     }
                     if(nextFrame->getTimeStamp() <= time)
                     {
+                        currentFrameNumber++;
                         currentFrame = nextFrame;
-                        nextFrame = currentMovie->getFrame(currentFrameNumber+1);
+                        nextFrame = currentMovie->getFrame(currentFrameNumber);
 
                         if(nextFrame != NULL && (currentFrameNumber) < maxFrames)
                         {
-                            ui->horizontalScrollBar->setValue(currentFrameNumber + 1);
+                            ui->horizontalScrollBar->setValue(currentFrameNumber);
                             updateUI();
-                            currentFrameNumber++;
                         }
                         else
                         {
