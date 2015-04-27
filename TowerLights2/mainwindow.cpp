@@ -218,42 +218,42 @@ void MainWindow::on_actionOpen_triggered()
                 //Get version number
                 if(count == 1)
                 {
-                    if(line == "0.1" || line == "0.2")
+                    if(line == "0.3")
+                    {
+                        version = 3;
+                        //std::cout<< "Version 3" <<std::endl;
+                    }
+                    else if(line == "0.4")
+                    {
+                        version = 4;
+                        //std::cout<< "Version 4" <<std::endl;
+                    }
+                    else
                     {
                         QMessageBox messageBox;
                         messageBox.critical(0,"Error","Invalid file format!");
                         messageBox.setFixedSize(500,200);
                         goto end;
                     }
-                    if(line == "0.3")
-                    {
-                        version = 3;
-                        //std::cout<< "Version 3" <<std::endl;
-                    }
-                    if(line == "0.4")
-                    {
-                        version = 4;
-                        //std::cout<< "Version 4" <<std::endl;
-                    }
                 }
 
-            //Get audio filename
-            if(count == 2 && line != "NoAudioFile" && version == 4)
-            {
-                QUrl temp;
-                QString mainfile = QUrl(fileName).fileName();
-                qDebug() << line;
-                qDebug() << mainfile;
-                qDebug() << mainfile.size();
-                fileName.chop(mainfile.size());
-                line=fileName+line;
-                fileName+=mainfile;
-                qDebug() << line;
-                qDebug() << fileName;
-                currentMovie->setAudio(QUrl::fromLocalFile(line));
-                audio->setMedia(currentMovie->getAudioFile());
-                audio->stop();
-            }
+                //Get audio filename
+                if(count == 2 && line != "NoAudioFile" && version == 4)
+                {
+                    QUrl temp;
+                    QString mainfile = QUrl(fileName).fileName();
+                    qDebug() << line;
+                    qDebug() << mainfile;
+                    qDebug() << mainfile.size();
+                    fileName.chop(mainfile.size());
+                    line=fileName+line;
+                    fileName+=mainfile;
+                    qDebug() << line;
+                    qDebug() << fileName;
+                    currentMovie->setAudio(QUrl::fromLocalFile(line));
+                    audio->setMedia(currentMovie->getAudioFile());
+                    audio->stop();
+                }
 
                 //get current color rgb values for version 3
                 if(count == 2 && version == 3)
