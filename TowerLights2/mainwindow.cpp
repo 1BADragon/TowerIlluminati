@@ -160,6 +160,32 @@ void MainWindow::on_actionNew_triggered()
 //this function is called when file>>open is selected
 void MainWindow::on_actionOpen_triggered()
 {
+    //if they have a file open thats been edited ask to save before opening new file
+    if(edited == true)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Save Your Project?", "Do you want to "
+                                             "save your current project?",
+                                      QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+        switch(reply)
+        {
+        case QMessageBox::Yes:
+            on_actionSave_triggered();
+        case QMessageBox::No:
+            delete currentMovie;
+            currentMovie = new Movie();
+            currentMovie->newFrame();
+            updateMainTower();
+            updateUI();
+            edited = false;
+            break;
+        case QMessageBox::Cancel:
+            goto end;
+        default:
+            break;
+        }
+    }
+
     fileName = QFileDialog::getOpenFileName(this,
                                             tr("Open File"), "/home/", tr("Tan Files (*.tan *.tan2)"));
     if (!fileName.isEmpty())
@@ -192,6 +218,13 @@ void MainWindow::on_actionOpen_triggered()
                 //Get version number
                 if(count == 1)
                 {
+                    if(line == "0.1" || line == "0.2")
+                    {
+                        QMessageBox messageBox;
+                        messageBox.critical(0,"Error","Invalid file format!");
+                        messageBox.setFixedSize(500,200);
+                        goto end;
+                    }
                     if(line == "0.3")
                     {
                         version = 3;
@@ -387,6 +420,8 @@ void MainWindow::on_actionOpen_triggered()
         updateMainTower();
         updateUI();
     }
+    end:
+      return;
 }
 
 //this function is called when file>>export is selected
