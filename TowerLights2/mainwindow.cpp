@@ -180,7 +180,7 @@ void MainWindow::on_actionOpen_triggered()
             edited = false;
             break;
         case QMessageBox::Cancel:
-            goto end;
+            return;
         default:
             break;
         }
@@ -233,7 +233,7 @@ void MainWindow::on_actionOpen_triggered()
                         QMessageBox messageBox;
                         messageBox.critical(0,"Error","Invalid file format!");
                         messageBox.setFixedSize(500,200);
-                        goto end;
+                        return;
                     }
                 }
 
@@ -420,8 +420,6 @@ void MainWindow::on_actionOpen_triggered()
         updateMainTower();
         updateUI();
     }
-    end:
-      return;
 }
 
 //this function is called when file>>export is selected
