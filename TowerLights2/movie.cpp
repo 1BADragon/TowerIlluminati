@@ -117,6 +117,22 @@ int Movie::getFrameFromTime(int targetTime)
     return --desiredFrame;
 }
 
+void Movie::deleteCurrentFrame()
+{
+    if(frameSequence->length() > 0)
+    {
+        if(currentFrameNumber == frameSequence->length() - 1)
+        {
+            frameSequence->removeAt(currentFrameNumber);
+            currentFrameNumber = currentFrameNumber - 1;
+        }
+        else
+        {
+            frameSequence->removeAt(currentFrameNumber);
+        }
+    }
+}
+
 
 int compareFrames(const void *a, const void *b)
 {

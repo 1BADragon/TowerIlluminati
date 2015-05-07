@@ -541,90 +541,26 @@
      <addaction name="actionBefore"/>
      <addaction name="actionAfter"/>
     </widget>
-    <addaction name="actionCut"/>
-    <addaction name="actionCopy"/>
-    <addaction name="actionPaist"/>
-    <addaction name="separator"/>
     <addaction name="menuInsert"/>
     <addaction name="actionDelete"/>
-    <addaction name="separator"/>
     <addaction name="actionClear_Frame"/>
     <addaction name="separator"/>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuPlayback">
     <property name="title">
      <string>Playback</string>
     </property>
-    <widget class="QMenu" name="menuMove_Forward">
-     <property name="title">
-      <string>Move Forward</string>
-     </property>
-     <addaction name="action15_Sec"/>
-     <addaction name="action30_Sec"/>
-     <addaction name="action45_Sec"/>
-    </widget>
-    <widget class="QMenu" name="menuMove_Backward">
-     <property name="title">
-      <string>Move Backward</string>
-     </property>
-     <addaction name="action15_Sec_2"/>
-     <addaction name="action30_Sec_2"/>
-     <addaction name="action45_Sec_2"/>
-    </widget>
     <addaction name="actionFrom_Beginning"/>
     <addaction name="actionFrom_Current"/>
     <addaction name="separator"/>
     <addaction name="actionPause"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
-    <addaction name="menuMove_Forward"/>
-    <addaction name="menuMove_Backward"/>
-    <addaction name="separator"/>
     <addaction name="actionPreview_Mode"/>
-   </widget>
-   <widget class="QMenu" name="menuSelect">
-    <property name="title">
-     <string>Select</string>
-    </property>
-    <addaction name="actionRow"/>
-    <addaction name="actionColumn"/>
-    <addaction name="actionAll"/>
-    <addaction name="separator"/>
-    <addaction name="actionInvert"/>
-    <addaction name="separator"/>
-    <addaction name="actionDeselect"/>
-   </widget>
-   <widget class="QMenu" name="menuAnimation_Tools">
-    <property name="title">
-     <string>Animation Tools</string>
-    </property>
-    <widget class="QMenu" name="menuInsert_Shape">
-     <property name="title">
-      <string>Insert Shape</string>
-     </property>
-     <addaction name="actionSquare"/>
-     <addaction name="actionCircle"/>
-     <addaction name="actionTriangle"/>
-     <addaction name="actionLine"/>
-     <addaction name="actionWave"/>
-    </widget>
-    <addaction name="menuInsert_Shape"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionDocumentation"/>
-    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuPlayback"/>
-   <addaction name="menuSelect"/>
-   <addaction name="menuAnimation_Tools"/>
-   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

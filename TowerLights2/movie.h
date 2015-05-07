@@ -56,6 +56,8 @@ public:
     void printTimeStamps();
     //! returns the index of the frame at time time
     int getFrameFromTime(int time);
+    //! Called to delete the current frame
+    void deleteCurrentFrame();
 
 private:
     //! hold the URL of the tan file

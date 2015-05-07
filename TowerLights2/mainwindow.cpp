@@ -1135,3 +1135,23 @@ void MainWindow::on_SortButton_clicked()
     updateMainTower();
     updateUI();
 }
+
+void MainWindow::on_actionClear_Frame_triggered()
+{
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            fullTower[i][j]->setProperty("color", "grey");
+        }
+    }
+    updateUI();
+}
+
+void MainWindow::on_actionDelete_triggered()
+{
+    saveCurrentFrame();
+    currentMovie->deleteCurrentFrame();
+    updateMainTower();
+    updateUI();
+}

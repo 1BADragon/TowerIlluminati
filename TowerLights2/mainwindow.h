@@ -131,6 +131,10 @@ private slots:
     //!This funciton is called when the sort button is clicked
     void on_SortButton_clicked();
 
+    void on_actionClear_Frame_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     //! The ui is used to interface with the xml generated GUI
     Ui::MainWindow *ui;
