@@ -1,12 +1,20 @@
+/*! \file frame.h
+ * \brief This file defines the Frame class as well as the macros
+ * FULLGRIDHEIGHT, FULLGRIDWIDTH, TOWERHEIGHT and TOWERWIDTH.
+ */
 #ifndef FRAME_H
 #define FRAME_H
 
 #include "pixel.h"
 #include <QtGlobal>
 
+//! Working area's width
 #define FULLGRIDWIDTH 12
+//! Working area's height
 #define FULLGRIDHEIGHT 20
+//! Tower's width
 #define TOWERWIDTH 4
+//! Tower's height
 #define TOWERHEIGHT 10
 
 /*!

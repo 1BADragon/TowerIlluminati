@@ -1,3 +1,7 @@
+/*! \file movie.h
+ * \brief This file defines the Movie class
+ */
+
 #ifndef MOVIE_H
 #define MOVIE_H
 

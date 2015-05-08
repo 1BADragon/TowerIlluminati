@@ -1,3 +1,7 @@
+/*! \file previewer.h
+ * \brief This file defines the Previewer class.
+ */
+
 #ifndef PREVIEWER_H
 #define PREVIEWER_H
 

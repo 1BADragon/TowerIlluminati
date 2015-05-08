@@ -1,4 +1,8 @@
-/*!
+/*! \file colorwheel.h
+ * \brief This file defines the ColorWheel class.
+ */
+
+/*! \file colorwheel.h
  * colorwheel.h and colorwheel.cpp are adapted from a github repository
  * accesible at https://github.com/liuyanghejerry/Qt-Plus/tree/master/develop/ColorWheel
  *

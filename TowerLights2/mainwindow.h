@@ -1,6 +1,6 @@
 /*! \file mainwindow.h
  *
- * This file defines the mainWindow class of the program
+ * \brief This file defines the MainWindow class of the program
  *
  */
 #ifndef MAINWINDOW_H

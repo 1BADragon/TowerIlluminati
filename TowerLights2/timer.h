@@ -1,3 +1,7 @@
+/*! \file timer.h
+ * \brief This file class defines the Timer class
+ */
+
 #ifndef TIMER_H
 #define TIMER_H
 #include <QTime>
