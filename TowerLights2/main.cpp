@@ -18,6 +18,9 @@
  * If you wish to edit the source of this program please do so through the permisison of Dr. Rinker
  *  at the University of Idaho, Moscow.
  *
+ * Note: This document does not describe the built in Qt functions/classes; only the classes
+ * created by the senior design team for this project.
+ *
  */
 #include "mainwindow.h"
 #include "colorwheel.h"
