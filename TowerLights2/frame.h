@@ -43,7 +43,7 @@ public:
     void setTowerGridPixel(int x, int y, QColor c);
     //! Gets a pixel pointer based on the 12x20 coordinate system
     Pixel *FullGridPixel(int x, int y);
-    //! Geta a pixel pointer based on the 4x10 coordinate system
+    //! Gets a pixel pointer based on the 4x10 coordinate system
     Pixel *TowerGridPixel(int x, int y);
     //! Shifts the pixels in a frame by x y
     void applyVector(int x, int y);

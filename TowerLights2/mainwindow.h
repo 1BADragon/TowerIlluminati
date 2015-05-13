@@ -135,6 +135,10 @@ private slots:
 
     void on_actionDelete_triggered();
 
+    void on_actionStop_triggered();
+
+    void on_actionPause_triggered();
+
 private:
     //! The ui is used to interface with the xml generated GUI
     Ui::MainWindow *ui;

@@ -1155,3 +1155,14 @@ void MainWindow::on_actionDelete_triggered()
     updateMainTower();
     updateUI();
 }
+
+void MainWindow::on_actionStop_triggered()
+{
+    on_stopButton_clicked();
+}
+
+
+void MainWindow::on_actionPause_triggered()
+{
+    on_playPauseButton_clicked();
+}
