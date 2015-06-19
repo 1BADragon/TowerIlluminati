@@ -1,3 +1,7 @@
+/*! \file pixel.h
+ * \brief This file defines the Pixel class.
+ */
+
 #ifndef PIXEL_H
 #define PIXEL_H
 

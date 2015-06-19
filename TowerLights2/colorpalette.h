@@ -1,3 +1,8 @@
+/*! \file colorpalette.h
+ * \brief This file defines the code side of the colorPalette class.
+ * It stores information about default colors.
+ */
+
 #ifndef COLORPALETTE_H
 #define COLORPALETTE_H
 

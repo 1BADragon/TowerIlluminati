@@ -160,6 +160,32 @@ void MainWindow::on_actionNew_triggered()
 //this function is called when file>>open is selected
 void MainWindow::on_actionOpen_triggered()
 {
+    //if they have a file open thats been edited ask to save before opening new file
+    if(edited == true)
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Save Your Project?", "Do you want to "
+                                             "save your current project?",
+                                      QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+        switch(reply)
+        {
+        case QMessageBox::Yes:
+            on_actionSave_triggered();
+        case QMessageBox::No:
+            delete currentMovie;
+            currentMovie = new Movie();
+            currentMovie->newFrame();
+            updateMainTower();
+            updateUI();
+            edited = false;
+            break;
+        case QMessageBox::Cancel:
+            return;
+        default:
+            break;
+        }
+    }
+
     fileName = QFileDialog::getOpenFileName(this,
                                             tr("Open File"), "/home/", tr("Tan Files (*.tan *.tan2)"));
     if (!fileName.isEmpty())
@@ -197,30 +223,37 @@ void MainWindow::on_actionOpen_triggered()
                         version = 3;
                         //std::cout<< "Version 3" <<std::endl;
                     }
-                    if(line == "0.4")
+                    else if(line == "0.4")
                     {
                         version = 4;
                         //std::cout<< "Version 4" <<std::endl;
                     }
+                    else
+                    {
+                        QMessageBox messageBox;
+                        messageBox.critical(0,"Error","Invalid file format!");
+                        messageBox.setFixedSize(500,200);
+                        return;
+                    }
                 }
 
-            //Get audio filename
-            if(count == 2 && line != "NoAudioFile" && version == 4)
-            {
-                QUrl temp;
-                QString mainfile = QUrl(fileName).fileName();
-                qDebug() << line;
-                qDebug() << mainfile;
-                qDebug() << mainfile.size();
-                fileName.chop(mainfile.size());
-                line=fileName+line;
-                fileName+=mainfile;
-                qDebug() << line;
-                qDebug() << fileName;
-                currentMovie->setAudio(QUrl::fromLocalFile(line));
-                audio->setMedia(currentMovie->getAudioFile());
-                audio->stop();
-            }
+                //Get audio filename
+                if(count == 2 && line != "NoAudioFile" && version == 4)
+                {
+                    QUrl temp;
+                    QString mainfile = QUrl(fileName).fileName();
+                    qDebug() << line;
+                    qDebug() << mainfile;
+                    qDebug() << mainfile.size();
+                    fileName.chop(mainfile.size());
+                    line=fileName+line;
+                    fileName+=mainfile;
+                    qDebug() << line;
+                    qDebug() << fileName;
+                    currentMovie->setAudio(QUrl::fromLocalFile(line));
+                    audio->setMedia(currentMovie->getAudioFile());
+                    audio->stop();
+                }
 
                 //get current color rgb values for version 3
                 if(count == 2 && version == 3)
@@ -692,34 +725,8 @@ void MainWindow::towerPainting()
     updateUI();
 }
 
-//this function sets the background color of the widgest
-//to the same color of the mainwindow background color
-void MainWindow::fixPalletBackground(){
-    QQuickWidget *colorPallet = ui->colorPalletWidget;
-    QQuickWidget *towerGrid = ui->TowerGridWidget;
-    QQuickWidget *windowScroll = ui->Previewer;
-
-    colorPallet->setClearColor(QColor(240,240,240));
-    towerGrid->setClearColor(Qt::white);
-    windowScroll->setClearColor(QColor(240,240,240));
-}
-
-void MainWindow::saveCurrentFrame()
-{
-    Frame *temp = currentMovie->getFrame(currentMovie->getFrameNumber());
-    QColor tempC;
 
 
-
-    for(int i = 0; i < FULLGRIDHEIGHT; i++)
-    {
-        for(int j = 0; j < FULLGRIDWIDTH; j++)
-        {
-            tempC = fullTower[i][j]->property("color").value<QColor>();
-            temp->setFullGridPixelColor(i, j, tempC);
-        }
-    }
-}
 
 void MainWindow::on_actionOpen_Audio_File_triggered()
 {
@@ -738,188 +745,11 @@ void MainWindow::on_previewScrollBar_valueChanged(int value)
     ui->mediaSlider->setValue(value);
 }
 
-void MainWindow::updateUI()
-{
-    //Update Previewer
-    for(int i = 0; i < 10; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            previewTowers[3][i][j]->setProperty("color",
-                                                mainTower[i][j]->property("color"));
-        }
-    }
-
-    //Previous Frames
-    int tempVal;
-    for(int i = 0; i < 3; i++)
-    {
-        tempVal = currentMovie->getFrameNumber() - (i+1);
-        if(tempVal >= 0)
-        {
-            for(int j = 0; j < 10; j++)
-            {
-                for(int k = 0; k < 4; k++)
-                {
-                    previewTowers[2-i][j][k]->
-                            setProperty("color",
-                                        currentMovie->getFrame(tempVal)->
-                                        TowerGridPixel(j,k)->getColor()
-                                        );
-                }
-            }
-        }
-        else
-        {
-            for(int j = 0; j < 10; j++)
-            {
-                for(int k = 0; k < 4; k++)
-                {
-                    previewTowers[2-i][j][k]->
-                            setProperty("color","grey");
-                }
-            }
-        }
-    }
-
-    //Upcoming Frames
-    for(int i = 0; i < 3; i++)
-    {
-        tempVal = currentMovie->getFrameNumber() + (i+1);
-        if(tempVal < currentMovie->getFrameCount())
-        {
-            for(int j = 0; j < 10; j++)
-            {
-                for(int k = 0; k < 4; k++)
-                {
-                    previewTowers[4+i][j][k]->
-                            setProperty("color",
-                                        currentMovie->getFrame(tempVal)->
-                                        TowerGridPixel(j,k)->getColor()
-                                        );
-                }
-            }
-        }
-        else
-        {
-            for(int j = 0; j < 10; j++)
-            {
-                for(int k = 0; k < 4; k++)
-                {
-                    previewTowers[4+i][j][k]->
-                            setProperty("color","grey");
-                }
-            }
-        }
-    }
-
-    //Update Scroll Bar
-    ui->previewScrollBar->setRange(0, currentMovie->getFrameCount() - 1);
-
-    //Update Time Box
-    QTime tempTime;
-    qint64 msecs = currentMovie->getCurrentFrame()->getTimeStamp();
-
-    int hours = msecs/(1000*60*60);
-    int minutes = (msecs-(hours*1000*60*60))/(1000*60);
-    int seconds = (msecs-(minutes*1000*60)-(hours*1000*60*60))/1000;
-    int milliseconds = msecs-(seconds*1000)-(minutes*1000*60)-(hours*1000*60*60);
-
-    tempTime.setHMS(hours, minutes, seconds, milliseconds);
-    ui->currentTime->setTime(tempTime);
-
-    qApp->processEvents();
-}
-
-void MainWindow::setUpMats()
-{
-    QList <QQuickItem *> grid = ui->TowerGridWidget->
-            rootObject()->childItems();
-    grid = grid[0]->childItems();
-
-    QList <QQuickItem *> allPreview = ui->Previewer->
-            rootObject()->childItems();
-    QList <QQuickItem *> tempPreview;
 
 
 
-    int count = 0;
-    for(int i = 0; i < 20; i++)
-    {
-        for(int j = 0; j < 12; j++)
-        {
-            fullTower[i][j] = grid[count++];
-        }
-    }
 
 
-    for(int x = 0; x < 7; x++){
-        count = 0;
-        tempPreview = allPreview[0]->childItems()[x]->childItems();
-        //std::cout<<tempPreview.length()<<std::endl;
-        for(int i = 0; i < 10; i++)
-        {
-            for(int j = 0; j < 4; j++)
-            {
-                previewTowers[x][i][j] = tempPreview[count++];
-            }
-        }
-    }
-
-    for(int i = 0; i < 10; i++)
-    {
-        for(int j = 0; j < 4; j++)
-        {
-            mainTower[i][j] = fullTower[i+5][j+4];
-        }
-    }
-
-    //Color Pallet
-
-    QList<QQuickItem *> colorP = ui->colorPalletWidget->rootObject()->
-            childItems()[0]->childItems();
-    count = 0;
-    for(int i = 0; i < 2; i++)
-        for(int j = 0; j < 8; j++)
-            colorPallet[i][j] = colorP[count++];
-
-}
-
-void MainWindow::changeCurrentFrame(int value)
-{
-    /*
-       * step 1 save current frame
-       * step 2 switch to frame "value"
-       * step 3 update previewer to reflect frames
-       */
-    Frame *tempFrame = currentMovie->getFrame(currentMovie->getFrameNumber());
-    QColor tempC;
-
-
-
-    for(int i = 0; i < FULLGRIDHEIGHT; i++)
-    {
-        for(int j = 0; j < FULLGRIDWIDTH; j++)
-        {
-            tempC = fullTower[i][j]->property("color").value<QColor>();
-            tempFrame->setFullGridPixelColor(i, j, tempC);
-        }
-    }
-
-    tempFrame = currentMovie->getFrame(value);
-    currentMovie->setFrameNumber(value);
-
-
-    for(int i = 0; i < FULLGRIDHEIGHT; i++)
-    {
-        for(int j = 0; j < FULLGRIDWIDTH; j++)
-        {
-            fullTower[i][j]->setProperty("color",tempFrame->FullGridPixel(i,j)->getColor());
-        }
-    }
-
-    updateUI();
-}
 
 void MainWindow::saveWarning()
 {
@@ -1304,4 +1134,35 @@ void MainWindow::on_SortButton_clicked()
     currentMovie->sortFrames();
     updateMainTower();
     updateUI();
+}
+
+void MainWindow::on_actionClear_Frame_triggered()
+{
+    for(int i = 0; i < FULLGRIDHEIGHT; i++)
+    {
+        for(int j = 0; j < FULLGRIDWIDTH; j++)
+        {
+            fullTower[i][j]->setProperty("color", "grey");
+        }
+    }
+    updateUI();
+}
+
+void MainWindow::on_actionDelete_triggered()
+{
+    saveCurrentFrame();
+    currentMovie->deleteCurrentFrame();
+    updateMainTower();
+    updateUI();
+}
+
+void MainWindow::on_actionStop_triggered()
+{
+    on_stopButton_clicked();
+}
+
+
+void MainWindow::on_actionPause_triggered()
+{
+    on_playPauseButton_clicked();
 }

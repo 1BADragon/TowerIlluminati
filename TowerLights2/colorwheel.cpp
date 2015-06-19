@@ -1,3 +1,13 @@
+/*! \file colorwheel.cpp
+ * colorwheel.h and colorwheel.cpp are adapted from a github repository
+ * accesible at https://github.com/liuyanghejerry/Qt-Plus/tree/master/develop/ColorWheel
+ *
+ * The author username is liuyanghejerry and he has given a
+ * universal concent to "use it in any purpose." This is locatable at:
+ * http://qt-project.org/forums/viewthread/19757
+ *
+ */
+
 #include "colorwheel.h"
 #include <QPainter>
 #include <QResizeEvent>
