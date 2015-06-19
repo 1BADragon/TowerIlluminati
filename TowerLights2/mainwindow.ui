@@ -550,8 +550,6 @@
     <addaction name="separator"/>
     <addaction name="actionClear_Frame"/>
     <addaction name="separator"/>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuPlayback">
     <property name="title">
